@@ -15,6 +15,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mongolianScript => 'Mongolian Script';
 
   @override
+  String get splashSubtitle => 'Master Vertical Writing';
+
+  @override
   String get homeTab => 'Home';
 
   @override
@@ -32,6 +35,13 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get languageDescription =>
       'Choose the language used throughout the app.';
+
+  @override
+  String get chooseLanguageTitle => 'Choose your language';
+
+  @override
+  String get chooseLanguageSubtitle =>
+      'You can always change this later in Settings.';
 
   @override
   String get englishLanguage => 'English';

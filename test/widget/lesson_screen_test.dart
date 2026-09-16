@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:learn_uigarjin/l10n/localization.dart';
 import 'package:learn_uigarjin/src/data/mongolian_letters.dart';
 import 'package:learn_uigarjin/src/screens/lesson_screen.dart';
 import 'package:learn_uigarjin/src/widgets/primary_action_button.dart';
 import 'package:learn_uigarjin/src/widgets/writing_canvas.dart';
 
 void main() {
-  Widget wrap(Widget child) => MaterialApp(home: child);
+  Widget wrap(Widget child) => MaterialApp(
+    supportedLocales: AppLocalizations.supportedLocales,
+    localizationsDelegates: AppLocalizations.localizationsDelegates,
+    home: child,
+  );
 
   testWidgets('lesson screen loads with all key controls', (tester) async {
     await tester.pumpWidget(wrap(LessonScreen(character: letterNInitial)));

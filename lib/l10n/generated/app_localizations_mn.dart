@@ -15,6 +15,9 @@ class AppLocalizationsMn extends AppLocalizations {
   String get mongolianScript => 'Монгол бичиг';
 
   @override
+  String get splashSubtitle => 'Босоо бичгийг эзэмш';
+
+  @override
   String get homeTab => 'Нүүр';
 
   @override
@@ -31,6 +34,13 @@ class AppLocalizationsMn extends AppLocalizations {
 
   @override
   String get languageDescription => 'Аппын хэлийг сонгоно уу.';
+
+  @override
+  String get chooseLanguageTitle => 'Хэлээ сонгоно уу';
+
+  @override
+  String get chooseLanguageSubtitle =>
+      'Үүнийг дараа нь Тохиргооноос хүссэн үедээ өөрчилж болно.';
 
   @override
   String get englishLanguage => 'English';

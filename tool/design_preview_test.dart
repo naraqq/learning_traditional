@@ -7,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:learn_uigarjin/main.dart';
+import 'package:learn_uigarjin/l10n/localization.dart';
 import 'package:learn_uigarjin/src/data/mongolian_letters.dart';
 import 'package:learn_uigarjin/src/storage/progress_store.dart';
 import 'package:learn_uigarjin/src/widgets/writing_canvas.dart';
@@ -14,6 +15,13 @@ import 'package:learn_uigarjin/src/widgets/writing_canvas.dart';
 void main() {
   testWidgets('export design previews', (tester) async {
     const sdk = String.fromEnvironment('FLUTTER_SDK');
+    const language = String.fromEnvironment(
+      'PREVIEW_LANGUAGE',
+      defaultValue: 'en',
+    );
+    tester.platformDispatcher.localesTestValue = [Locale(language)];
+    addTearDown(tester.platformDispatcher.clearLocalesTestValue);
+    final l10n = await AppLocalizations.delegate.load(Locale(language));
     expect(
       sdk,
       isNotEmpty,
@@ -55,7 +63,9 @@ void main() {
             key.currentContext!.findRenderObject()! as RenderRepaintBoundary;
         final image = await boundary.toImage(pixelRatio: 2);
         final bytes = await image.toByteData(format: ui.ImageByteFormat.png);
-        final file = File('build/design/$name.png');
+        final file = File(
+          'build/design/${language == 'en' ? '' : '$language-'}$name.png',
+        );
         await file.parent.create(recursive: true);
         await file.writeAsBytes(bytes!.buffer.asUint8List());
         image.dispose();
@@ -63,12 +73,16 @@ void main() {
     }
 
     await capture('home');
-    for (final tab in ['Learn', 'Review', 'Settings']) {
-      await tester.tap(find.text(tab));
+    for (final tab in [
+      (l10n.learnTab, 'learn'),
+      (l10n.reviewTab, 'review'),
+      (l10n.settingsTab, 'settings'),
+    ]) {
+      await tester.tap(find.text(tab.$1));
       await tester.pumpAndSettle();
-      await capture(tab.toLowerCase());
+      await capture(tab.$2);
     }
-    await tester.tap(find.text('Home'));
+    await tester.tap(find.text(l10n.homeTab));
     await tester.pumpAndSettle();
     await tester.ensureVisible(find.byKey(const Key('continueLearningButton')));
     await tester.tap(find.byKey(const Key('continueLearningButton')));
@@ -88,14 +102,14 @@ void main() {
     await tester.ensureVisible(find.byKey(const Key('continueButton')));
     await tester.tap(find.byKey(const Key('continueButton')));
     await tester.pumpAndSettle();
-    expect(find.text('Well done!'), findsOneWidget);
+    expect(find.text(l10n.wellDone), findsOneWidget);
     await capture('results');
     await tester.ensureVisible(
       find.byKey(const Key('celebrationContinueButton')),
     );
     await tester.tap(find.byKey(const Key('celebrationContinueButton')));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('Review'));
+    await tester.tap(find.text(l10n.reviewTab));
     await tester.pumpAndSettle();
     await capture('review-completed');
     expect(tester.takeException(), isNull);

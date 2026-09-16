@@ -1,3 +1,4 @@
+import '../../l10n/localization.dart';
 import 'package:flutter/material.dart';
 import '../controllers/lesson_controller.dart';
 import '../models/character_definition.dart';
@@ -10,13 +11,6 @@ import '../widgets/lesson_progress_bar.dart';
 import '../widgets/primary_action_button.dart';
 import '../widgets/tolerance_toggle.dart';
 import '../widgets/writing_canvas.dart';
-
-String _formLabel(CharacterForm form) => switch (form) {
-  CharacterForm.isolated => 'Isolated form',
-  CharacterForm.initial => 'Initial form',
-  CharacterForm.medial => 'Medial form',
-  CharacterForm.final_ => 'Final form',
-};
 
 class LessonScreen extends StatefulWidget {
   const LessonScreen({
@@ -42,6 +36,7 @@ class _LessonScreenState extends State<LessonScreen> {
   final GlobalKey<WritingCanvasState> _canvasKey =
       GlobalKey<WritingCanvasState>();
   bool _showCelebration = false;
+  AppLocalizations get _l10n => context.l10n;
   final Set<int> _drawingPointers = {};
 
   @override
@@ -81,7 +76,7 @@ class _LessonScreenState extends State<LessonScreen> {
                     animation: _controller,
                     builder: (_, _) => PrimaryActionButton(
                       key: const Key('continueButton'),
-                      label: 'Continue',
+                      label: _l10n.continueButton,
                       onPressed: _controller.isComplete
                           ? () {
                               widget.onCompleted?.call(
@@ -115,7 +110,7 @@ class _LessonScreenState extends State<LessonScreen> {
                           children: [
                             IconButton(
                               key: const Key('lessonCloseButton'),
-                              tooltip: 'Back to learning',
+                              tooltip: _l10n.backToLearning,
                               onPressed: () =>
                                   Navigator.of(context).maybePop(false),
                               icon: const Icon(Icons.close_rounded),
@@ -126,6 +121,10 @@ class _LessonScreenState extends State<LessonScreen> {
                                 animation: _controller,
                                 builder: (_, _) => LessonProgressBar(
                                   progress: _controller.progress,
+                                  semanticLabel: _l10n.lessonProgress(
+                                    _controller.currentStrokeIndex,
+                                    widget.character.strokes.length,
+                                  ),
                                 ),
                               ),
                             ),
@@ -143,8 +142,8 @@ class _LessonScreenState extends State<LessonScreen> {
                           ],
                         ),
                         const SizedBox(height: 8),
-                        const Text(
-                          'HANDWRITING PRACTICE',
+                        Text(
+                          _l10n.handwritingPractice,
                           style: TextStyle(
                             fontSize: 10,
                             letterSpacing: 1.6,
@@ -154,7 +153,11 @@ class _LessonScreenState extends State<LessonScreen> {
                         ),
                         const SizedBox(height: 6),
                         Text(
-                          '${widget.character.cyrillic} · ${widget.character.transliteration} — ${_formLabel(widget.character.form)}',
+                          _l10n.letterTitle(
+                            widget.character.cyrillic,
+                            widget.character.transliteration,
+                            _l10n.form(widget.character.form),
+                          ),
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                         const SizedBox(height: 10),
@@ -170,8 +173,8 @@ class _LessonScreenState extends State<LessonScreen> {
                         ),
                         if (widget.character.isDemoData) ...[
                           const SizedBox(height: 10),
-                          const Text(
-                            'Preview letter · Shape and stroke order pending expert review.',
+                          Text(
+                            _l10n.letterNote,
                             style: TextStyle(
                               fontSize: 11,
                               color: AppColors.secondaryDark,
@@ -201,8 +204,7 @@ class _LessonScreenState extends State<LessonScreen> {
                             ),
                             clipBehavior: Clip.antiAlias,
                             child: Semantics(
-                              label:
-                                  'Writing area. Trace the reference from its marked start point.',
+                              label: _l10n.writingArea,
                               child: WritingCanvas(
                                 key: _canvasKey,
                                 controller: _controller,
@@ -222,7 +224,7 @@ class _LessonScreenState extends State<LessonScreen> {
                               builder: (_, _) => IconChipButton(
                                 key: const Key('undoButton'),
                                 icon: Icons.undo_rounded,
-                                label: 'Undo',
+                                label: _l10n.undo,
                                 onPressed: _controller.completedStrokes.isEmpty
                                     ? null
                                     : _controller.undoLastStroke,
@@ -231,13 +233,13 @@ class _LessonScreenState extends State<LessonScreen> {
                             IconChipButton(
                               key: const Key('clearButton'),
                               icon: Icons.refresh_rounded,
-                              label: 'Clear',
+                              label: _l10n.clear,
                               onPressed: _controller.clearAll,
                             ),
                             IconChipButton(
                               key: const Key('showAgainButton'),
                               icon: Icons.play_circle_outline_rounded,
-                              label: 'Show again',
+                              label: _l10n.showAgain,
                               onPressed: () =>
                                   _canvasKey.currentState?.playDemo(),
                             ),
@@ -249,7 +251,7 @@ class _LessonScreenState extends State<LessonScreen> {
                           builder: (_, _) => Semantics(
                             liveRegion: true,
                             child: FeedbackBanner(
-                              message: _controller.feedbackMessage,
+                              message: _l10n.feedback(_controller.feedback),
                               tone: _controller.lastAccepted == null
                                   ? FeedbackTone.neutral
                                   : _controller.lastAccepted!
@@ -272,8 +274,8 @@ class _LessonScreenState extends State<LessonScreen> {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Text(
-          'ONE STEP FURTHER',
+        Text(
+          _l10n.resultsEyebrow,
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 11,
@@ -302,20 +304,19 @@ class _LessonScreenState extends State<LessonScreen> {
         ),
         const SizedBox(height: 24),
         Text(
-          'Well done!',
+          _l10n.wellDone,
           textAlign: TextAlign.center,
           style: Theme.of(context).textTheme.headlineLarge,
         ),
         const SizedBox(height: 12),
         Text(
-          '${widget.character.cyrillic} · ${widget.character.transliteration} complete',
+          _l10n.letterComplete(
+            '${widget.character.cyrillic} · ${widget.character.transliteration}',
+          ),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: 8),
-        const Text(
-          'Every stroke is a little more familiar.\nKeep showing up for your practice.',
-          textAlign: TextAlign.center,
-        ),
+        Text(_l10n.resultsDescription, textAlign: TextAlign.center),
         const SizedBox(height: 26),
         Container(
           padding: const EdgeInsets.all(20),
@@ -334,12 +335,12 @@ class _LessonScreenState extends State<LessonScreen> {
                   color: AppColors.primary,
                 ),
               ),
-              const Text('Tracing score'),
+              Text(_l10n.tracingScore),
               const SizedBox(height: 8),
               Text(
                 _controller.toleranceMode == ToleranceMode.beginner
-                    ? 'Beginner guidance'
-                    : 'Advanced guidance',
+                    ? _l10n.beginnerGuidance
+                    : _l10n.advancedGuidance,
                 style: const TextStyle(
                   fontSize: 12,
                   color: AppColors.textMuted,
@@ -351,7 +352,7 @@ class _LessonScreenState extends State<LessonScreen> {
         const SizedBox(height: 24),
         PrimaryActionButton(
           key: const Key('celebrationContinueButton'),
-          label: 'Back to learning',
+          label: _l10n.backToLearning,
           icon: Icons.check_rounded,
           onPressed: _finish,
         ),

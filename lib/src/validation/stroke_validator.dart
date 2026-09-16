@@ -1,3 +1,4 @@
+import '../models/lesson_feedback.dart';
 import 'dart:ui';
 
 import '../geometry/geometry_utils.dart';
@@ -29,7 +30,7 @@ class StrokeValidator {
     if (userPoints.length < 2 || GeometryUtils.pathLength(userPoints) < 0.02) {
       return _zeroResult(
         StrokeFeedbackReason.incomplete,
-        'Complete the stroke.',
+        LessonFeedback.incomplete,
       );
     }
 
@@ -103,7 +104,7 @@ class StrokeValidator {
         coverageScore,
         false,
         StrokeFeedbackReason.wrongDirection,
-        'Wrong direction — retrace from the starting dot.',
+        LessonFeedback.wrongDirection,
       );
     }
     if (startDist > effectiveStartRadius * 2.2) {
@@ -129,7 +130,7 @@ class StrokeValidator {
         coverageScore,
         false,
         StrokeFeedbackReason.incomplete,
-        'Complete the stroke all the way to the end.',
+        LessonFeedback.incompleteToEnd,
       );
     }
     if (overall < passThreshold) {
@@ -142,7 +143,7 @@ class StrokeValidator {
         coverageScore,
         false,
         StrokeFeedbackReason.lowSimilarity,
-        'Not quite — try to follow the guide more closely.',
+        LessonFeedback.lowSimilarity,
       );
     }
     return _result(
@@ -154,7 +155,7 @@ class StrokeValidator {
       coverageScore,
       true,
       StrokeFeedbackReason.correct,
-      'Correct!',
+      LessonFeedback.correct,
     );
   }
 
@@ -177,20 +178,18 @@ class StrokeValidator {
     return (80 - over * 60).clamp(0.0, 80.0);
   }
 
-  static String _startHint(Offset userStart, Offset refStart) {
+  static LessonFeedback _startHint(Offset userStart, Offset refStart) {
     final dx = userStart.dx - refStart.dx;
     final dy = userStart.dy - refStart.dy;
     if (dy.abs() > dx.abs()) {
-      return dy < 0 ? 'Start a little lower.' : 'Start a little higher.';
+      return dy < 0 ? LessonFeedback.startLower : LessonFeedback.startHigher;
     }
-    return dx < 0
-        ? 'Start a little further right.'
-        : 'Start a little further left.';
+    return dx < 0 ? LessonFeedback.startRight : LessonFeedback.startLeft;
   }
 
   StrokeValidationResult _zeroResult(
     StrokeFeedbackReason reason,
-    String message,
+    LessonFeedback feedback,
   ) {
     return StrokeValidationResult(
       overallScore: 0,
@@ -201,7 +200,7 @@ class StrokeValidator {
       coverageScore: 0,
       accepted: false,
       reason: reason,
-      message: message,
+      feedback: feedback,
     );
   }
 
@@ -214,7 +213,7 @@ class StrokeValidator {
     double coverage,
     bool accepted,
     StrokeFeedbackReason reason,
-    String message,
+    LessonFeedback feedback,
   ) {
     return StrokeValidationResult(
       overallScore: overall,
@@ -225,7 +224,7 @@ class StrokeValidator {
       coverageScore: coverage,
       accepted: accepted,
       reason: reason,
-      message: message,
+      feedback: feedback,
     );
   }
 }

@@ -1,3 +1,4 @@
+import '../../l10n/localization.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import '../controllers/app_progress_controller.dart';
@@ -11,10 +12,15 @@ import '../widgets/primary_action_button.dart';
 import 'lesson_screen.dart';
 
 class HomePathScreen extends StatefulWidget {
-  HomePathScreen({super.key, List<CharacterDefinition>? letters, this.store})
-    : letters = letters ?? mongolianLetters;
+  HomePathScreen({
+    super.key,
+    List<CharacterDefinition>? letters,
+    this.store,
+    this.progress,
+  }) : letters = letters ?? mongolianLetters;
   final List<CharacterDefinition> letters;
   final ProgressStore? store;
+  final AppProgressController? progress;
 
   @override
   State<HomePathScreen> createState() => _HomePathScreenState();
@@ -23,24 +29,28 @@ class HomePathScreen extends StatefulWidget {
 class _HomePathScreenState extends State<HomePathScreen> {
   late final AppProgressController _progress;
   int _tab = 0;
+  AppLocalizations get _l10n => context.l10n;
 
   @override
   void initState() {
     super.initState();
-    _progress = AppProgressController(
-      orderedIds: [for (final c in widget.letters) c.id],
-      store: widget.store,
-    );
-    unawaited(_progress.load());
+    _progress =
+        widget.progress ??
+        AppProgressController(
+          orderedIds: [for (final c in widget.letters) c.id],
+          store: widget.store,
+        );
+    if (widget.progress == null) unawaited(_progress.load());
   }
 
   @override
   void dispose() {
-    _progress.dispose();
+    if (widget.progress == null) _progress.dispose();
     super.dispose();
   }
 
   Future<void> _openLesson(CharacterDefinition character) async {
+    ScaffoldMessenger.of(context).clearSnackBars();
     await Navigator.of(context).push<bool>(
       MaterialPageRoute(
         builder: (_) => LessonScreen(
@@ -63,8 +73,8 @@ class _HomePathScreenState extends State<HomePathScreen> {
   void _lockedTap() {
     ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Complete the letter before this one first.'),
+      SnackBar(
+        content: Text(_l10n.lockedLesson),
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -91,13 +101,15 @@ class _HomePathScreenState extends State<HomePathScreen> {
                         const Icon(Icons.cloud_off_rounded, size: 40),
                         const SizedBox(height: 16),
                         Text(
-                          _progress.storageError!,
+                          _progress.loadFailed
+                              ? _l10n.loadError
+                              : _l10n.saveError,
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 20),
                         FilledButton(
                           onPressed: _progress.load,
-                          child: const Text('Try again'),
+                          child: Text(_l10n.tryAgain),
                         ),
                       ],
                     ),
@@ -116,10 +128,14 @@ class _HomePathScreenState extends State<HomePathScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(_progress.storageError!),
+                                  Text(
+                                    _progress.loadFailed
+                                        ? _l10n.loadError
+                                        : _l10n.saveError,
+                                  ),
                                   TextButton(
                                     onPressed: _progress.save,
-                                    child: const Text('Retry save'),
+                                    child: Text(_l10n.retrySave),
                                   ),
                                 ],
                               ),
@@ -141,25 +157,25 @@ class _HomePathScreenState extends State<HomePathScreen> {
       bottomNavigationBar: NavigationBar(
         selectedIndex: _tab,
         onDestinationSelected: _selectTab,
-        destinations: const [
+        destinations: [
           NavigationDestination(
             icon: Icon(Icons.home_outlined),
             selectedIcon: Icon(Icons.home_rounded),
-            label: 'Home',
+            label: _l10n.homeTab,
           ),
           NavigationDestination(
             icon: Icon(Icons.menu_book_outlined),
             selectedIcon: Icon(Icons.menu_book_rounded),
-            label: 'Learn',
+            label: _l10n.learnTab,
           ),
           NavigationDestination(
             icon: Icon(Icons.history_edu_outlined),
             selectedIcon: Icon(Icons.history_edu_rounded),
-            label: 'Review',
+            label: _l10n.reviewTab,
           ),
           NavigationDestination(
             icon: Icon(Icons.tune_rounded),
-            label: 'Settings',
+            label: _l10n.settingsTab,
           ),
         ],
       ),
@@ -178,7 +194,7 @@ class _HomePathScreenState extends State<HomePathScreen> {
         child: const Icon(Icons.gesture_rounded, color: Colors.white, size: 25),
       ),
       const SizedBox(width: 11),
-      const Expanded(
+      Expanded(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -191,7 +207,7 @@ class _HomePathScreenState extends State<HomePathScreen> {
               ),
             ),
             Text(
-              'Mongolian Script',
+              _l10n.mongolianScript,
               style: TextStyle(fontSize: 11, color: AppColors.textMuted),
             ),
           ],
@@ -226,16 +242,11 @@ class _HomePathScreenState extends State<HomePathScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _eyebrow('A LITTLE PRACTICE, EVERY DAY'),
+        _eyebrow(_l10n.dailyEyebrow),
         const SizedBox(height: 10),
-        Text(
-          'A living script.\nA new beginning.',
-          style: Theme.of(context).textTheme.headlineLarge,
-        ),
+        Text(_l10n.homeTitle, style: Theme.of(context).textTheme.headlineLarge),
         const SizedBox(height: 12),
-        const Text(
-          'Make room for a few quiet moments.\nDiscover traditional Mongolian, one stroke at a time.',
-        ),
+        Text(_l10n.homeDescription),
         const SizedBox(height: 26),
         _hero(next),
         const SizedBox(height: 22),
@@ -244,7 +255,7 @@ class _HomePathScreenState extends State<HomePathScreen> {
             Expanded(
               child: _stat(
                 '${_progress.completedCount}',
-                'Forms practiced',
+                _l10n.formsPracticed,
                 Icons.check_circle_outline,
               ),
             ),
@@ -252,24 +263,26 @@ class _HomePathScreenState extends State<HomePathScreen> {
             Expanded(
               child: _stat(
                 '${_progress.practiceCount}',
-                'Lessons finished',
+                _l10n.lessonsFinished,
                 Icons.edit_outlined,
               ),
             ),
           ],
         ),
         const SizedBox(height: 30),
-        Row(
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          spacing: 12,
+          runSpacing: 8,
           children: [
-            Expanded(
-              child: Text(
-                'Your learning journey',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
+            Text(
+              _l10n.learningJourney,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             TextButton(
               onPressed: () => _selectTab(1),
-              child: const Text('View all'),
+              child: Text(_l10n.viewAll),
             ),
           ],
         ),
@@ -278,16 +291,14 @@ class _HomePathScreenState extends State<HomePathScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _eyebrow('INTRODUCTORY COLLECTION'),
+              _eyebrow(_l10n.collectionEyebrow),
               const SizedBox(height: 10),
               Text(
-                'First strokes',
+                _l10n.firstStrokes,
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               const SizedBox(height: 6),
-              Text(
-                '${widget.letters.length} letter forms · Guided handwriting',
-              ),
+              Text(_l10n.unitSummary(widget.letters.length)),
               const SizedBox(height: 20),
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
@@ -295,19 +306,20 @@ class _HomePathScreenState extends State<HomePathScreen> {
                   value: _progress.fraction,
                   minHeight: 6,
                   backgroundColor: AppColors.line,
-                  semanticsLabel: 'Collection progress',
-                  semanticsValue:
-                      '${(_progress.fraction * 100).round()} percent',
+                  semanticsLabel: _l10n.collectionProgress,
+                  semanticsValue: _l10n.percentSpoken(
+                    (_progress.fraction * 100).round(),
+                  ),
                 ),
               ),
               const SizedBox(height: 10),
               Text(
-                '${(_progress.fraction * 100).round()}% explored',
+                _l10n.percentExplored((_progress.fraction * 100).round()),
                 style: const TextStyle(fontSize: 12),
               ),
               const SizedBox(height: 16),
               PrimaryActionButton(
-                label: 'Explore the letters',
+                label: _l10n.exploreLetters,
                 icon: Icons.arrow_forward_rounded,
                 onPressed: () => _selectTab(1),
               ),
@@ -336,8 +348,8 @@ class _HomePathScreenState extends State<HomePathScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text(
-                    'YOUR NEXT SMALL STEP',
+                  Text(
+                    _l10n.nextStepEyebrow,
                     style: TextStyle(
                       color: Color(0xFFD6DFB8),
                       fontSize: 10,
@@ -348,10 +360,10 @@ class _HomePathScreenState extends State<HomePathScreen> {
                   const SizedBox(height: 16),
                   Text(
                     next == null
-                        ? 'Look how far\nyou’ve come.'
+                        ? _l10n.allCompleteTitle
                         : _progress.completedCount == 0
-                        ? 'Meet your\nfirst letter.'
-                        : 'Keep your\npractice growing.',
+                        ? _l10n.firstLetterTitle
+                        : _l10n.keepPracticingTitle,
                     style: const TextStyle(
                       fontSize: 29,
                       height: 1.15,
@@ -363,8 +375,12 @@ class _HomePathScreenState extends State<HomePathScreen> {
                   const SizedBox(height: 12),
                   Text(
                     next == null
-                        ? 'Revisit your letters and refine each stroke.'
-                        : '${next.cyrillic} · ${next.transliteration}  /  ${_form(next.form)} form',
+                        ? _l10n.allCompleteDescription
+                        : _l10n.letterTitle(
+                            next.cyrillic,
+                            next.transliteration,
+                            _l10n.form(next.form),
+                          ),
                     style: const TextStyle(
                       color: Color(0xFFD5E2DB),
                       fontSize: 13,
@@ -417,10 +433,10 @@ class _HomePathScreenState extends State<HomePathScreen> {
           ),
           label: Text(
             next == null
-                ? 'Review your letters'
+                ? _l10n.reviewLetters
                 : _progress.completedCount == 0
-                ? 'Begin your practice'
-                : 'Continue learning',
+                ? _l10n.beginPractice
+                : _l10n.continueLearning,
           ),
         ),
       ],
@@ -430,13 +446,14 @@ class _HomePathScreenState extends State<HomePathScreen> {
   Widget _learn() => Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
-      _eyebrow('YOUR LEARNING JOURNEY'),
+      _eyebrow(_l10n.journeyEyebrow),
       const SizedBox(height: 10),
-      Text('First strokes', style: Theme.of(context).textTheme.headlineLarge),
-      const SizedBox(height: 10),
-      const Text(
-        'Watch the movement, follow the guide, and find your rhythm. Each lesson opens the next.',
+      Text(
+        _l10n.firstStrokes,
+        style: Theme.of(context).textTheme.headlineLarge,
       ),
+      const SizedBox(height: 10),
+      Text(_l10n.learnDescription),
       const SizedBox(height: 20),
       _contentNote(),
       const SizedBox(height: 22),
@@ -452,16 +469,14 @@ class _HomePathScreenState extends State<HomePathScreen> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _eyebrow('MAKE IT FAMILIAR'),
+        _eyebrow(_l10n.reviewEyebrow),
         const SizedBox(height: 10),
         Text(
-          'Return. Refine.\nRemember.',
+          _l10n.reviewTitle,
           style: Theme.of(context).textTheme.headlineLarge,
         ),
         const SizedBox(height: 12),
-        const Text(
-          'Revisit the forms you’ve practiced. Your best tracing score is saved for each letter.',
-        ),
+        Text(_l10n.reviewDescription),
         const SizedBox(height: 24),
         if (completed.isEmpty)
           _panel(
@@ -474,18 +489,15 @@ class _HomePathScreenState extends State<HomePathScreen> {
                 ),
                 const SizedBox(height: 16),
                 Text(
-                  'Your practice grows here',
+                  _l10n.emptyReviewTitle,
                   style: Theme.of(context).textTheme.titleLarge,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  'Finish your first lesson to add a letter to your personal review collection.',
-                  textAlign: TextAlign.center,
-                ),
+                Text(_l10n.emptyReviewDescription, textAlign: TextAlign.center),
                 const SizedBox(height: 22),
                 PrimaryActionButton(
-                  label: 'Find your first lesson',
+                  label: _l10n.findFirstLesson,
                   onPressed: () => _selectTab(1),
                 ),
               ],
@@ -500,42 +512,87 @@ class _HomePathScreenState extends State<HomePathScreen> {
   Widget _settings() => Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
     children: [
-      _eyebrow('YOUR OWN PACE'),
+      _eyebrow(_l10n.settingsEyebrow),
       const SizedBox(height: 10),
       Text(
-        'Practice, your way.',
+        _l10n.settingsTitle,
         style: Theme.of(context).textTheme.headlineLarge,
       ),
       const SizedBox(height: 12),
-      const Text(
-        'Small adjustments for a more comfortable writing experience.',
-      ),
+      Text(_l10n.settingsDescription),
       const SizedBox(height: 24),
+      _panel(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              _l10n.language,
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+            const SizedBox(height: 6),
+            Text(_l10n.languageDescription),
+            const SizedBox(height: 14),
+            InputDecorator(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 4,
+                ),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton<String>(
+                  key: const Key('languageSelector'),
+                  value: _progress.languageCode,
+                  isExpanded: true,
+                  items: [
+                    DropdownMenuItem(
+                      value: 'en',
+                      child: Text(_l10n.englishLanguage),
+                    ),
+                    DropdownMenuItem(
+                      value: 'mn',
+                      child: Text(_l10n.mongolianLanguage),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    if (value != null) {
+                      ScaffoldMessenger.of(context).clearSnackBars();
+                      unawaited(_progress.updateSettings(languageCode: value));
+                    }
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      const SizedBox(height: 16),
       _panel(
         child: Column(
           children: [
             SwitchListTile.adaptive(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Beginner guidance'),
-              subtitle: const Text('More forgiving stroke tolerances.'),
+              title: Text(_l10n.beginnerGuidance),
+              subtitle: Text(_l10n.beginnerDescription),
               value: _progress.beginner,
               onChanged: (v) => _progress.updateSettings(beginner: v),
             ),
             const Divider(),
             SwitchListTile.adaptive(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Polish accepted strokes'),
-              subtitle: const Text(
-                'Gently align accepted ink with the guide. Turn off to see your own handwriting.',
-              ),
+              title: Text(_l10n.polishStrokes),
+              subtitle: Text(_l10n.polishDescription),
               value: _progress.beautify,
               onChanged: (v) => _progress.updateSettings(beautify: v),
             ),
             const Divider(),
             SwitchListTile.adaptive(
               contentPadding: EdgeInsets.zero,
-              title: const Text('Haptic feedback'),
-              subtitle: const Text('A subtle response as you write.'),
+              title: Text(_l10n.hapticFeedback),
+              subtitle: Text(_l10n.hapticDescription),
               value: _progress.haptics,
               onChanged: (v) => _progress.updateSettings(haptics: v),
             ),
@@ -544,27 +601,25 @@ class _HomePathScreenState extends State<HomePathScreen> {
       ),
       const SizedBox(height: 20),
       _panel(
-        child: const Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Icon(Icons.offline_pin_outlined, color: AppColors.primary),
             SizedBox(height: 12),
             Text(
-              'A little space, just for you',
+              _l10n.offlineTitle,
               style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
             ),
             SizedBox(height: 8),
-            Text(
-              'Lessons work offline. Progress and preferences stay on this device. Uninstalling the app can remove them; cloud backup is not included.',
-            ),
+            Text(_l10n.offlineDescription),
           ],
         ),
       ),
       const SizedBox(height: 16),
       _contentNote(),
       const SizedBox(height: 24),
-      const Text(
-        'UIGARJIN  /  EARLY LEARNING EDITION',
+      Text(
+        _l10n.edition,
         textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: 10,
@@ -600,7 +655,10 @@ class _HomePathScreenState extends State<HomePathScreen> {
             child: Row(
               children: [
                 Semantics(
-                  label: '${character.displayName} reference preview',
+                  label: _l10n.referencePreview(
+                    character.cyrillic,
+                    _l10n.form(character.form),
+                  ),
                   image: true,
                   child: Container(
                     width: 48,
@@ -631,7 +689,7 @@ class _HomePathScreenState extends State<HomePathScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'LESSON ${number.toString().padLeft(2, '0')}',
+                        _l10n.lessonNumber(number.toString().padLeft(2, '0')),
                         style: const TextStyle(
                           fontSize: 10,
                           letterSpacing: 1.2,
@@ -645,7 +703,12 @@ class _HomePathScreenState extends State<HomePathScreen> {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        '${_form(character.form)} form${score == null ? '' : ' · Best ${score.round()}%'}',
+                        score == null
+                            ? _l10n.form(character.form)
+                            : _l10n.formBestScore(
+                                _l10n.form(character.form),
+                                score.round(),
+                              ),
                         style: const TextStyle(
                           fontSize: 12,
                           color: AppColors.textMuted,
@@ -697,7 +760,7 @@ class _HomePathScreenState extends State<HomePathScreen> {
       color: const Color(0xFFF0E9DC),
       borderRadius: BorderRadius.circular(16),
     ),
-    child: const Row(
+    child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Icon(
@@ -708,7 +771,7 @@ class _HomePathScreenState extends State<HomePathScreen> {
         SizedBox(width: 10),
         Expanded(
           child: Text(
-            'Preview collection · Letter shapes and stroke order are awaiting expert review.',
+            _l10n.collectionNote,
             style: TextStyle(
               fontSize: 12,
               height: 1.5,
@@ -739,11 +802,4 @@ class _HomePathScreenState extends State<HomePathScreen> {
       color: AppColors.primary,
     ),
   );
-
-  String _form(CharacterForm form) => switch (form) {
-    CharacterForm.isolated => 'Isolated',
-    CharacterForm.initial => 'Initial',
-    CharacterForm.medial => 'Medial',
-    CharacterForm.final_ => 'Final',
-  };
 }

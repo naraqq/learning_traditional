@@ -2,12 +2,16 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import '../storage/progress_store.dart';
 
+enum ProgressStorageError { load, save }
+
 class AppProgressController extends ChangeNotifier {
   AppProgressController({
     required List<String> orderedIds,
     ProgressStore? store,
+    String initialLanguageCode = 'en',
   }) : _orderedIds = List.unmodifiable(orderedIds),
-       _store = store ?? MemoryProgressStore();
+       _store = store ?? MemoryProgressStore(),
+       languageCode = initialLanguageCode == 'mn' ? 'mn' : 'en';
 
   final List<String> _orderedIds;
   final ProgressStore _store;
@@ -17,7 +21,9 @@ class AppProgressController extends ChangeNotifier {
   bool _disposed = false;
   bool loading = true;
   bool loadFailed = false;
-  String? storageError;
+  ProgressStorageError? storageError;
+  String languageCode;
+  bool languageChosen = false;
   bool beginner = true;
   bool beautify = true;
   bool haptics = true;
@@ -63,6 +69,14 @@ class AppProgressController extends ChangeNotifier {
         final loadedBeginner = settings['beginner'] as bool;
         final loadedBeautify = settings['beautify'] as bool;
         final loadedHaptics = settings['haptics'] as bool;
+        final savedLanguage = settings['languageCode'];
+        final loadedLanguage = savedLanguage == 'en' || savedLanguage == 'mn'
+            ? savedLanguage as String
+            : languageCode;
+        // Absent on saves from before the first-run language screen existed
+        // — treated as "not chosen yet" rather than failing the whole load.
+        final loadedLanguageChosen =
+            settings['languageChosen'] as bool? ?? false;
         final count = data['practiceCount'] as int;
         if (count < 0) throw const FormatException('Invalid practice count');
         _completed
@@ -75,11 +89,12 @@ class AppProgressController extends ChangeNotifier {
         beautify = loadedBeautify;
         haptics = loadedHaptics;
         practiceCount = count;
+        languageCode = loadedLanguage;
+        languageChosen = loadedLanguageChosen;
       }
     } catch (_) {
       loadFailed = true;
-      storageError =
-          'Your saved progress could not be opened. Please try again.';
+      storageError = ProgressStorageError.load;
     }
     loading = false;
     _notify();
@@ -101,11 +116,28 @@ class AppProgressController extends ChangeNotifier {
     bool? beginner,
     bool? beautify,
     bool? haptics,
+    String? languageCode,
   }) async {
     if (loading || loadFailed) return;
     this.beginner = beginner ?? this.beginner;
     this.beautify = beautify ?? this.beautify;
     this.haptics = haptics ?? this.haptics;
+    if (languageCode == 'en' || languageCode == 'mn') {
+      this.languageCode = languageCode!;
+    }
+    _notify();
+    await save();
+  }
+
+  /// Records the learner's first-run language pick so the language
+  /// selection screen only ever shows once. Later language changes go
+  /// through [updateSettings] from the Settings screen instead.
+  Future<void> chooseLanguage(String languageCode) async {
+    if (loading || loadFailed) return;
+    if (languageCode == 'en' || languageCode == 'mn') {
+      this.languageCode = languageCode;
+    }
+    languageChosen = true;
     _notify();
     await save();
   }
@@ -121,6 +153,8 @@ class AppProgressController extends ChangeNotifier {
         'beginner': beginner,
         'beautify': beautify,
         'haptics': haptics,
+        'languageCode': languageCode,
+        'languageChosen': languageChosen,
       },
     });
     // A slow earlier write must never replace newer progress.
@@ -129,7 +163,7 @@ class AppProgressController extends ChangeNotifier {
         await _store.write(snapshot);
         storageError = null;
       } catch (_) {
-        storageError = 'Changes could not be saved on this device. Tap retry.';
+        storageError = ProgressStorageError.save;
       }
       _notify();
     });

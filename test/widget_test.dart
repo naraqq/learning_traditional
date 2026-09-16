@@ -1,7 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:learn_uigarjin/main.dart';
-import 'package:learn_uigarjin/src/storage/progress_store.dart';
+
+import 'test_support.dart';
 
 void main() {
   testWidgets('App launches into the letter path home screen', (
@@ -14,9 +15,10 @@ void main() {
         const FakeAccessibilityFeatures(disableAnimations: true);
     addTearDown(tester.platformDispatcher.clearAccessibilityFeaturesTestValue);
 
-    await tester.pumpWidget(
-      MongolianHandwritingApp(store: MemoryProgressStore()),
-    );
+    // A store that has already been through first-run language selection,
+    // so this smoke test lands straight on Home like it always has — the
+    // splash/language-select flow itself is covered by its own test.
+    await tester.pumpWidget(MongolianHandwritingApp(store: onboardedStore()));
     await tester.pumpAndSettle();
 
     expect(find.text('Mongolian Script'), findsOneWidget);

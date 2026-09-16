@@ -6,13 +6,14 @@
 - Home dashboard, sequential learning collection, review collection, and settings.
 - Refined lesson canvas and results, optional ink polishing, configurable guidance and haptics.
 - Persisted completions, best tracing scores, lesson counts, and preferences.
+- English and Cyrillic Mongolian interface languages, including lesson feedback and saved selection.
 - Storage error recovery, responsive layout tests, and a reproducible design preview exporter.
 
 The content remains the original six preview forms. This milestone does not imply expert approval of that material or production readiness.
 
 ## Milestone 2 — Verified introductory course
 
-Decide the primary learner audience and teaching language with the project owner. Work with a traditional Mongolian teacher to verify letter shapes, stroke order, connections, explanations, and pronunciation.
+Confirm the primary learner audience with the project owner. The interface supports English and Cyrillic Mongolian; apply both languages to new course explanations. Work with a traditional Mongolian teacher to verify letter shapes, stroke order, connections, explanations, and pronunciation.
 
 Introduce a content schema with stable course/unit/lesson IDs, sources, review status, form relationships, and content versions. Verify vertical text shaping and font licensing before adding connected words. Replace preview data with a coherent reviewed introductory unit.
 

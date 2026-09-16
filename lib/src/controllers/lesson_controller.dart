@@ -1,3 +1,4 @@
+import '../models/lesson_feedback.dart';
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
@@ -36,7 +37,7 @@ class LessonController extends ChangeNotifier {
 
   final List<CompletedStroke> _completedStrokes = [];
   int _currentStrokeIndex = 0;
-  String _feedbackMessage = 'Trace the first stroke.';
+  LessonFeedback _feedback = LessonFeedback.traceFirst;
 
   /// Null until the first stroke attempt; then true/false for the most
   /// recent attempt's outcome. Used by the UI to pick feedback styling.
@@ -55,7 +56,7 @@ class LessonController extends ChangeNotifier {
       ? _character.strokes[_currentStrokeIndex]
       : null;
 
-  String get feedbackMessage => _feedbackMessage;
+  LessonFeedback get feedback => _feedback;
   bool? get lastAccepted => _lastAccepted;
   bool get isComplete => _currentStrokeIndex >= _character.strokes.length;
   double get progress => _character.strokes.isEmpty
@@ -84,7 +85,7 @@ class LessonController extends ChangeNotifier {
     _character = character;
     _completedStrokes.clear();
     _currentStrokeIndex = 0;
-    _feedbackMessage = 'Trace the first stroke.';
+    _feedback = LessonFeedback.traceFirst;
     _lastRejectedPoints = null;
     _lastAccepted = null;
     notifyListeners();
@@ -110,9 +111,9 @@ class LessonController extends ChangeNotifier {
         coverageScore: 0,
         accepted: false,
         reason: StrokeFeedbackReason.incomplete,
-        message: 'This exercise is already complete.',
+        feedback: LessonFeedback.alreadyComplete,
       );
-      _feedbackMessage = result.message;
+      _feedback = result.feedback;
       notifyListeners();
       return result;
     }
@@ -126,7 +127,7 @@ class LessonController extends ChangeNotifier {
       mode: _toleranceMode,
     );
 
-    _feedbackMessage = result.message;
+    _feedback = result.feedback;
     _lastAccepted = result.accepted;
 
     if (result.accepted) {
@@ -180,7 +181,7 @@ class LessonController extends ChangeNotifier {
     if (_completedStrokes.isEmpty) return;
     _completedStrokes.removeLast();
     _currentStrokeIndex = _completedStrokes.length;
-    _feedbackMessage = 'Last stroke removed — try again.';
+    _feedback = LessonFeedback.undo;
     _lastRejectedPoints = null;
     _lastAccepted = null;
     notifyListeners();
@@ -190,7 +191,7 @@ class LessonController extends ChangeNotifier {
     if (_completedStrokes.isEmpty && _lastRejectedPoints == null) return;
     _completedStrokes.clear();
     _currentStrokeIndex = 0;
-    _feedbackMessage = 'Trace the first stroke.';
+    _feedback = LessonFeedback.traceFirst;
     _lastRejectedPoints = null;
     _lastAccepted = null;
     notifyListeners();

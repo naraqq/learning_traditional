@@ -1,3 +1,5 @@
+import 'lesson_feedback.dart';
+
 /// Why a stroke was accepted or rejected, used to pick short feedback text
 /// and to decide whether beautification should run.
 enum StrokeFeedbackReason {
@@ -20,7 +22,7 @@ class StrokeValidationResult {
     required this.coverageScore,
     required this.accepted,
     required this.reason,
-    required this.message,
+    required this.feedback,
   });
 
   final double overallScore;
@@ -34,5 +36,5 @@ class StrokeValidationResult {
   final StrokeFeedbackReason reason;
 
   /// Short, learner-facing feedback, e.g. "Correct!" or "Wrong direction".
-  final String message;
+  final LessonFeedback feedback;
 }

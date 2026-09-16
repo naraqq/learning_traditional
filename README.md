@@ -8,11 +8,19 @@ A Flutter app for practicing traditional Mongolian handwriting. The first develo
 - **Learn:** browse six preview letter forms, inspect their reference shapes, and unlock lessons sequentially.
 - **Handwriting:** watch an animated stroke demonstration, trace with finger or stylus, receive geometric feedback, undo/clear strokes, and see a tracing score.
 - **Review:** repeat completed forms and view the best tracing score for each.
-- **Settings:** persist beginner/advanced guidance, optional accepted-stroke polishing, and haptic feedback.
+- **Settings:** switch instantly between English and Cyrillic Mongolian (Монгол), and persist guidance, accepted-stroke polishing, and haptic feedback preferences.
 - **Storage:** completed forms, best scores, completed lesson count, and preferences are saved on the device. Completion is recorded when the results screen opens. Failed writes can be retried; unreadable saved data is preserved instead of silently overwritten.
 - **Layouts:** bounded tablet layouts, scrollable small-screen lessons, scalable text, standard focusable primary buttons, and system reduced-motion support for stroke demonstrations.
 
 No account or connection is required for bundled lessons. Progress is not backed up to an app-managed cloud service. Uninstalling the app can remove local data.
+
+## Interface languages
+
+Choose **Settings → Language → English / Монгол** (in Mongolian: **Тохиргоо → Хэл**). The choice applies to every screen, lesson feedback, error messages, and accessibility labels, and is remembered after restarting. On first launch, the app chooses a supported device language, falling back to English. Existing saved progress remains compatible.
+
+The Mongolian interface uses Cyrillic, as selected for this project. Traditional-script practice shapes are unchanged.
+
+Translations live in `lib/l10n/app_en.arb` and `lib/l10n/app_mn.arb`. Edit those catalogs and run `flutter gen-l10n`; do not edit `lib/l10n/generated/` by hand. The app uses [Flutter’s localization workflow](https://docs.flutter.dev/ui/internationalization), including localized Material and Cupertino controls. Lesson logic emits typed feedback codes; the UI translates them so scoring never depends on the selected language.
 
 ## Content status
 
@@ -39,6 +47,8 @@ To export actual Flutter screenshots for design review:
 ```sh
 flutter test tool/design_preview_test.dart --dart-define=FLUTTER_SDK=/absolute/path/to/flutter
 ```
+
+Add `--dart-define=PREVIEW_LANGUAGE=mn` to export Mongolian previews with an `mn-` filename prefix.
 
 The exporter loads the SDK's Roboto fonts and writes Home, Learn, Review, Settings, Lesson, and Results PNG files under `build/design/`. It is separate from the normal test suite and does not add screenshot-generation behavior to the application.
 
@@ -69,7 +79,7 @@ Accepted ink can be aligned toward the reference, but validation always occurs b
 
 ## Tests
 
-Unit and widget tests cover geometry, validation, beautification, lesson completion, sequential unlocking, persistence across controller/app recreation, write failure/retry, malformed stored data, rapid changes, settings, and responsive navigation/lessons at phone and tablet sizes with 100% and 200% text scaling.
+Unit and widget tests cover geometry, validation, beautification, lesson completion, sequential unlocking, persistence across controller/app recreation, write failure/retry, malformed stored data, rapid changes, settings, language switching and restart behavior, older saves without a language field, translation completeness, and responsive navigation/lessons in both languages at phone and tablet sizes with 100% and 200% text scaling.
 
 Storage tests exercise the adapter contract using test stores. Physical-device persistence, stylus behavior, accessibility with real assistive technology, and iOS builds still need device verification.
 

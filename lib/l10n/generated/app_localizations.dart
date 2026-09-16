@@ -110,6 +110,12 @@ abstract class AppLocalizations {
   /// **'Mongolian Script'**
   String get mongolianScript;
 
+  /// No description provided for @splashSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Master Vertical Writing'**
+  String get splashSubtitle;
+
   /// No description provided for @homeTab.
   ///
   /// In en, this message translates to:
@@ -145,6 +151,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose the language used throughout the app.'**
   String get languageDescription;
+
+  /// No description provided for @chooseLanguageTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose your language'**
+  String get chooseLanguageTitle;
+
+  /// No description provided for @chooseLanguageSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You can always change this later in Settings.'**
+  String get chooseLanguageSubtitle;
 
   /// No description provided for @englishLanguage.
   ///
