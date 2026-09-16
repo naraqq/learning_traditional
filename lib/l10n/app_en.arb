@@ -1,0 +1,176 @@
+{
+  "@@locale": "en",
+  "appTitle": "Uigarjin — Mongolian Script",
+  "mongolianScript": "Mongolian Script",
+  "homeTab": "Home",
+  "learnTab": "Learn",
+  "reviewTab": "Review",
+  "settingsTab": "Settings",
+  "language": "Language",
+  "languageDescription": "Choose the language used throughout the app.",
+  "englishLanguage": "English",
+  "mongolianLanguage": "Монгол",
+  "lockedLesson": "Complete the letter before this one first.",
+  "loadError": "Your saved progress could not be opened. Please try again.",
+  "saveError": "Changes could not be saved on this device. Tap retry.",
+  "tryAgain": "Try again",
+  "retrySave": "Retry save",
+  "dailyEyebrow": "A LITTLE PRACTICE, EVERY DAY",
+  "homeTitle": "A living script.\nA new beginning.",
+  "homeDescription": "Make room for a few quiet moments.\nDiscover traditional Mongolian, one stroke at a time.",
+  "formsPracticed": "Forms practiced",
+  "lessonsFinished": "Lessons finished",
+  "learningJourney": "Your learning journey",
+  "viewAll": "View all",
+  "collectionEyebrow": "INTRODUCTORY COLLECTION",
+  "firstStrokes": "First strokes",
+  "unitSummary": "{count, plural, one{1 letter form · Guided handwriting} other{{count} letter forms · Guided handwriting}}",
+  "@unitSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "collectionProgress": "Collection progress",
+  "percentSpoken": "{percent} percent",
+  "@percentSpoken": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "percentExplored": "{percent}% explored",
+  "@percentExplored": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "exploreLetters": "Explore the letters",
+  "nextStepEyebrow": "YOUR NEXT SMALL STEP",
+  "allCompleteTitle": "Look how far\nyou’ve come.",
+  "firstLetterTitle": "Meet your\nfirst letter.",
+  "keepPracticingTitle": "Keep your\npractice growing.",
+  "allCompleteDescription": "Revisit your letters and refine each stroke.",
+  "reviewLetters": "Review your letters",
+  "beginPractice": "Begin your practice",
+  "continueLearning": "Continue learning",
+  "journeyEyebrow": "YOUR LEARNING JOURNEY",
+  "learnDescription": "Watch the movement, follow the guide, and find your rhythm. Each lesson opens the next.",
+  "reviewEyebrow": "MAKE IT FAMILIAR",
+  "reviewTitle": "Return. Refine.\nRemember.",
+  "reviewDescription": "Revisit the forms you’ve practiced. Your best tracing score is saved for each letter.",
+  "emptyReviewTitle": "Your practice grows here",
+  "emptyReviewDescription": "Finish your first lesson to add a letter to your personal review collection.",
+  "findFirstLesson": "Find your first lesson",
+  "settingsEyebrow": "YOUR OWN PACE",
+  "settingsTitle": "Practice, your way.",
+  "settingsDescription": "Small adjustments for a more comfortable writing experience.",
+  "beginnerGuidance": "Beginner guidance",
+  "beginnerDescription": "More forgiving stroke tolerances.",
+  "polishStrokes": "Polish accepted strokes",
+  "polishDescription": "Gently align accepted ink with the guide. Turn off to see your own handwriting.",
+  "hapticFeedback": "Haptic feedback",
+  "hapticDescription": "A subtle response as you write.",
+  "offlineTitle": "A little space, just for you",
+  "offlineDescription": "Lessons work offline. Progress and preferences stay on this device. Uninstalling the app can remove them; cloud backup is not included.",
+  "edition": "UIGARJIN  /  EARLY LEARNING EDITION",
+  "referencePreview": "{letter} · {form} reference preview",
+  "@referencePreview": {
+    "placeholders": {
+      "letter": {
+        "type": "String"
+      },
+      "form": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonNumber": "LESSON {number}",
+  "@lessonNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "formBestScore": "{form} · Best {score}%",
+  "@formBestScore": {
+    "placeholders": {
+      "form": {
+        "type": "String"
+      },
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "collectionNote": "Preview collection · Letter shapes and stroke order are awaiting expert review.",
+  "isolatedForm": "Isolated form",
+  "initialForm": "Initial form",
+  "medialForm": "Medial form",
+  "finalForm": "Final form",
+  "continueButton": "Continue",
+  "backToLearning": "Back to learning",
+  "handwritingPractice": "HANDWRITING PRACTICE",
+  "letterTitle": "{cyrillic} · {latin} — {form}",
+  "@letterTitle": {
+    "placeholders": {
+      "cyrillic": {
+        "type": "String"
+      },
+      "latin": {
+        "type": "String"
+      },
+      "form": {
+        "type": "String"
+      }
+    }
+  },
+  "letterNote": "Preview letter · Shape and stroke order pending expert review.",
+  "writingArea": "Writing area. Trace the reference from its marked start point.",
+  "undo": "Undo",
+  "clear": "Clear",
+  "showAgain": "Show again",
+  "resultsEyebrow": "ONE STEP FURTHER",
+  "wellDone": "Well done!",
+  "letterComplete": "{letter} complete",
+  "@letterComplete": {
+    "placeholders": {
+      "letter": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsDescription": "Every stroke is a little more familiar.\nKeep showing up for your practice.",
+  "tracingScore": "Tracing score",
+  "advancedGuidance": "Advanced guidance",
+  "beginner": "Beginner",
+  "advanced": "Advanced",
+  "feedbackTraceFirst": "Trace the first stroke.",
+  "feedbackAlreadyComplete": "This exercise is already complete.",
+  "feedbackUndo": "Last stroke removed — try again.",
+  "feedbackIncomplete": "Complete the stroke.",
+  "feedbackIncompleteToEnd": "Complete the stroke all the way to the end.",
+  "feedbackWrongDirection": "Wrong direction — retrace from the starting dot.",
+  "feedbackLowSimilarity": "Not quite — try to follow the guide more closely.",
+  "feedbackCorrect": "Correct!",
+  "feedbackStartLower": "Start a little lower.",
+  "feedbackStartHigher": "Start a little higher.",
+  "feedbackStartRight": "Start a little further right.",
+  "feedbackStartLeft": "Start a little further left.",
+  "lessonProgress": "Stroke {completed} of {total} completed",
+  "@lessonProgress": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  }
+}

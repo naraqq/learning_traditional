@@ -1,0 +1,176 @@
+{
+  "@@locale": "mn",
+  "appTitle": "Уйгаржин — Монгол бичиг",
+  "mongolianScript": "Монгол бичиг",
+  "homeTab": "Нүүр",
+  "learnTab": "Сурах",
+  "reviewTab": "Давтах",
+  "settingsTab": "Тохиргоо",
+  "language": "Хэл",
+  "languageDescription": "Аппын хэлийг сонгоно уу.",
+  "englishLanguage": "English",
+  "mongolianLanguage": "Монгол",
+  "lockedLesson": "Эхлээд өмнөх үсгийн хичээлийг дуусгаарай.",
+  "loadError": "Хадгалсан ахицыг нээж чадсангүй. Дахин оролдоно уу.",
+  "saveError": "Өөрчлөлтийг энэ төхөөрөмжид хадгалж чадсангүй. Дахин оролдоно уу.",
+  "tryAgain": "Дахин оролдох",
+  "retrySave": "Дахин хадгалах",
+  "dailyEyebrow": "ӨДӨР БҮР БАГА БАГААР",
+  "homeTitle": "Өв соёлын бичиг.\nШинэ эхлэл.",
+  "homeDescription": "Өөртөө хэдэн хором зориулаарай.\nЗураас бүрээр монгол бичгээ сурцгаая.",
+  "formsPracticed": "Давтсан хэлбэр",
+  "lessonsFinished": "Дууссан хичээл",
+  "learningJourney": "Таны сурах зам",
+  "viewAll": "Бүгдийг үзэх",
+  "collectionEyebrow": "АНХНЫ АЛХАМ",
+  "firstStrokes": "Эхний зураасууд",
+  "unitSummary": "{count} үсгийн хэлбэр · Загвар дагаж бичих",
+  "@unitSummary": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "collectionProgress": "Хичээлийн ахиц",
+  "percentSpoken": "{percent} хувь",
+  "@percentSpoken": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "percentExplored": "{percent}% үзсэн",
+  "@percentExplored": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "exploreLetters": "Үсгүүдтэй танилцах",
+  "nextStepEyebrow": "ТАНЫ ДАРААГИЙН АЛХАМ",
+  "allCompleteTitle": "Та ихийг\nсурчээ.",
+  "firstLetterTitle": "Эхний үсэгтэйгээ\nтанилцаарай.",
+  "keepPracticingTitle": "Дасгалаа\nүргэлжлүүлээрэй.",
+  "allCompleteDescription": "Үсгүүдээ давтаж, зураас бүрээ сайжруулаарай.",
+  "reviewLetters": "Үсгүүдээ давтах",
+  "beginPractice": "Дасгалаа эхлэх",
+  "continueLearning": "Үргэлжлүүлэн сурах",
+  "journeyEyebrow": "ТАНЫ СУРАХ ЗАМ",
+  "learnDescription": "Бичих хөдөлгөөнийг ажиглаж, загварыг дагаарай. Хичээлээ дуусгахад дараагийнх нь нээгдэнэ.",
+  "reviewEyebrow": "ДАВТЛАГААР БАТАТГАЯ",
+  "reviewTitle": "Давт. Сайжруул.\nТогтоо.",
+  "reviewDescription": "Дасгал хийсэн үсгийн хэлбэрүүдээ давтаарай. Үсэг бүрийн хамгийн өндөр үнэлгээ хадгалагдана.",
+  "emptyReviewTitle": "Таны давтлага эндээс эхэлнэ",
+  "emptyReviewDescription": "Эхний хичээлээ дуусгахад сурсан үсэг тань давтлагын хэсэгт нэмэгдэнэ.",
+  "findFirstLesson": "Эхний хичээлээ үзэх",
+  "settingsEyebrow": "ӨӨРИЙН ХЭМНЭЛЭЭР",
+  "settingsTitle": "Өөртөө тохируулж сураарай.",
+  "settingsDescription": "Бичих дасгалаа өөртөө илүү тохиромжтой болгоорой.",
+  "beginnerGuidance": "Анхан шатны тусламж",
+  "beginnerDescription": "Зураасны бага зэргийн зөрүүг зөвшөөрнө.",
+  "polishStrokes": "Зөв бичсэн зураасыг жигдлэх",
+  "polishDescription": "Зөв бичсэн зураасыг загварт ойртуулж жигдэлнэ. Унтраавал өөрийн бичсэн хэлбэрээр харагдана.",
+  "hapticFeedback": "Чичиргээ",
+  "hapticDescription": "Бичих үед зөөлөн чичиргээгээр мэдэгдэнэ.",
+  "offlineTitle": "Танд зориулсан сурах орон зай",
+  "offlineDescription": "Хичээлүүд интернэтгүй ажиллана. Ахиц болон тохиргоо энэ төхөөрөмжид хадгалагдана. Аппыг устгавал эдгээр мэдээлэл устаж болно. Үүлэн нөөцлөлт байхгүй.",
+  "edition": "УЙГАРЖИН  /  СУРГАЛТЫН ТУРШИЛТЫН ХУВИЛБАР",
+  "referencePreview": "{letter} · {form} загвар",
+  "@referencePreview": {
+    "placeholders": {
+      "letter": {
+        "type": "String"
+      },
+      "form": {
+        "type": "String"
+      }
+    }
+  },
+  "lessonNumber": "ХИЧЭЭЛ {number}",
+  "@lessonNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "formBestScore": "{form} · Дээд үнэлгээ: {score}%",
+  "@formBestScore": {
+    "placeholders": {
+      "form": {
+        "type": "String"
+      },
+      "score": {
+        "type": "int"
+      }
+    }
+  },
+  "collectionNote": "Туршилтын хичээлүүд · Үсгийн хэлбэр, зураасны дарааллыг мэргэжлийн багшаар хянуулах шаардлагатай.",
+  "isolatedForm": "Дан хэлбэр",
+  "initialForm": "Эхэн хэлбэр",
+  "medialForm": "Дунд хэлбэр",
+  "finalForm": "Адаг хэлбэр",
+  "continueButton": "Үргэлжлүүлэх",
+  "backToLearning": "Хичээл рүү буцах",
+  "handwritingPractice": "БИЧИХ ДАСГАЛ",
+  "letterTitle": "{cyrillic} · {latin} — {form}",
+  "@letterTitle": {
+    "placeholders": {
+      "cyrillic": {
+        "type": "String"
+      },
+      "latin": {
+        "type": "String"
+      },
+      "form": {
+        "type": "String"
+      }
+    }
+  },
+  "letterNote": "Туршилтын үсэг · Хэлбэр, зураасны дарааллыг мэргэжлийн багшаар хянуулах шаардлагатай.",
+  "writingArea": "Бичих талбар. Тэмдэглэсэн эхлэх цэгээс загварыг дагуулж бичээрэй.",
+  "undo": "Буцаах",
+  "clear": "Арилгах",
+  "showAgain": "Дахин үзүүлэх",
+  "resultsEyebrow": "НЭГ АЛХМААР УРАГШИЛЛАА",
+  "wellDone": "Сайн байна!",
+  "letterComplete": "{letter} үсгийн дасгал дууслаа",
+  "@letterComplete": {
+    "placeholders": {
+      "letter": {
+        "type": "String"
+      }
+    }
+  },
+  "resultsDescription": "Зураас бүр улам танил болж байна.\nДасгалаа тогтмол хийгээрэй.",
+  "tracingScore": "Дагуулж бичсэн үнэлгээ",
+  "advancedGuidance": "Ахисан шатны тусламж",
+  "beginner": "Анхан",
+  "advanced": "Ахисан",
+  "feedbackTraceFirst": "Эхний зураасыг дагуулж бичээрэй.",
+  "feedbackAlreadyComplete": "Энэ дасгал аль хэдийн дууссан байна.",
+  "feedbackUndo": "Сүүлийн зураасыг арилгалаа. Дахин бичээрэй.",
+  "feedbackIncomplete": "Зураасаа гүйцээж бичээрэй.",
+  "feedbackIncompleteToEnd": "Зураасаа төгсгөлийн цэг хүртэл гүйцээж бичээрэй.",
+  "feedbackWrongDirection": "Чиглэл буруу байна. Эхлэх цэгээс дахин бичээрэй.",
+  "feedbackLowSimilarity": "Арай өөр байна. Загварт илүү ойртуулж бичээрэй.",
+  "feedbackCorrect": "Зөв байна!",
+  "feedbackStartLower": "Бага зэрэг доороос эхлээрэй.",
+  "feedbackStartHigher": "Бага зэрэг дээрээс эхлээрэй.",
+  "feedbackStartRight": "Бага зэрэг баруун талаас эхлээрэй.",
+  "feedbackStartLeft": "Бага зэрэг зүүн талаас эхлээрэй.",
+  "lessonProgress": "{total} зурааснаас {completed}-ийг бичсэн",
+  "@lessonProgress": {
+    "placeholders": {
+      "completed": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  }
+}
