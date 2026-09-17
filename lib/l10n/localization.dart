@@ -9,6 +9,10 @@ extension LocalizedContext on BuildContext {
 }
 
 extension LearningMessages on AppLocalizations {
+  String characterForm(CharacterDefinition character) => character.alternate
+      ? alternateForm(form(character.form))
+      : form(character.form);
+
   String form(CharacterForm value) => switch (value) {
     CharacterForm.isolated => isolatedForm,
     CharacterForm.initial => initialForm,

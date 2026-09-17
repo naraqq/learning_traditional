@@ -1,3 +1,4 @@
+import 'package:learn_uigarjin/src/data/mongolian_letters.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:learn_uigarjin/main.dart';
@@ -22,6 +23,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Mongolian Script'), findsOneWidget);
-    expect(find.text('0/6'), findsOneWidget);
+    expect(find.text('0/${mongolianLetters.length}'), findsOneWidget);
   });
 }

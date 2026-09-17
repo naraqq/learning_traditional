@@ -39,6 +39,46 @@ void main() {
     });
   });
 
+  group('StrokeSmoothing.closedMovingAverage', () {
+    test('wraps around the loop instead of anchoring endpoints', () {
+      final points = [
+        for (var i = 0; i < 12; i++)
+          Offset.fromDirection(i / 12 * 6.28318, 10) +
+              Offset(i.isEven ? 0.3 : -0.3, 0),
+      ];
+      final result = StrokeSmoothing.closedMovingAverage(points);
+
+      // A closed loop has no real "ends", so unlike movingAverage the
+      // first and last points must be smoothed too, not left untouched.
+      expect(result.first, isNot(points.first));
+      expect(result.last, isNot(points.last));
+    });
+
+    test('reduces noise around a noisy circle', () {
+      final points = [
+        for (var i = 0; i < 24; i++)
+          Offset.fromDirection(i / 24 * 6.28318, 10 + (i.isEven ? 0.5 : -0.5)),
+      ];
+      final result = StrokeSmoothing.closedMovingAverage(points);
+
+      double radiusVariance(List<Offset> pts) {
+        final radii = pts.map((p) => p.distance).toList();
+        final mean = radii.reduce((a, b) => a + b) / radii.length;
+        final sumSq = radii
+            .map((r) => (r - mean) * (r - mean))
+            .reduce((a, b) => a + b);
+        return sumSq / radii.length;
+      }
+
+      expect(radiusVariance(result), lessThan(radiusVariance(points)));
+    });
+
+    test('leaves short inputs untouched', () {
+      final points = [const Offset(0, 0), const Offset(1, 1)];
+      expect(StrokeSmoothing.closedMovingAverage(points), points);
+    });
+  });
+
   group('OneEuroLikeFilter', () {
     test('first sample passes through unchanged', () {
       final filter = OneEuroLikeFilter();

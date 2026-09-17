@@ -5,6 +5,7 @@
   "splashSubtitle": "Master Vertical Writing",
   "homeTab": "Home",
   "learnTab": "Learn",
+  "dictionaryTab": "Dictionary",
   "reviewTab": "Review",
   "settingsTab": "Settings",
   "language": "Language",
@@ -25,8 +26,8 @@
   "lessonsFinished": "Lessons finished",
   "learningJourney": "Your learning journey",
   "viewAll": "View all",
-  "collectionEyebrow": "INTRODUCTORY COLLECTION",
-  "firstStrokes": "First strokes",
+  "collectionEyebrow": "REFERENCE ALPHABET",
+  "firstStrokes": "The Mongolian alphabet",
   "unitSummary": "{count, plural, one{1 letter form · Guided handwriting} other{{count} letter forms · Guided handwriting}}",
   "@unitSummary": {
     "placeholders": {
@@ -111,7 +112,7 @@
       }
     }
   },
-  "collectionNote": "Preview collection · Letter shapes and stroke order are awaiting expert review.",
+  "collectionNote": "Letter shapes traced from the Shigüsütei Bagatur alphabet chart. Tracing order is a practice guide; the chart does not specify stroke order.",
   "isolatedForm": "Isolated form",
   "initialForm": "Initial form",
   "medialForm": "Medial form",
@@ -133,7 +134,7 @@
       }
     }
   },
-  "letterNote": "Preview letter · Shape and stroke order pending expert review.",
+  "letterNote": "Chart-based letter · Tracing order pending expert review.",
   "writingArea": "Writing area. Trace the reference from its marked start point.",
   "undo": "Undo",
   "clear": "Clear",
@@ -172,6 +173,73 @@
         "type": "int"
       },
       "total": {
+        "type": "int"
+      }
+    }
+  },
+  "challengeTitle": "Challenge mode",
+  "challengePrompt": "What letter is it?",
+  "challengeDescription": "Look at the traditional script and choose its matching letter.",
+  "challengeStart": "Start challenge",
+  "challengeCorrect": "That’s right!",
+  "challengeIncorrect": "Keep learning!",
+  "challengeAnswer": "Correct answer: {letter}",
+  "@challengeAnswer": {
+    "placeholders": {
+      "letter": {
+        "type": "String"
+      }
+    }
+  },
+  "challengeNext": "Next letter",
+  "challengeResults": "See results",
+  "challengeComplete": "Challenge complete!",
+  "challengeScore": "{correct} of {total} correct",
+  "@challengeScore": {
+    "placeholders": {
+      "correct": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "challengeQuestion": "Question {current} of {total}",
+  "@challengeQuestion": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "challengeAgain": "Play again",
+  "challengeHome": "Back to practice",
+  "challengeGlyph": "Letter to identify",
+  "challengeUnavailable": "More letters are needed to start a challenge.",
+  "alternateForm": "{form} · Alternate",
+  "challengeShared": "This shape has several readings. Choose the matching group.",
+  "@alternateForm": {
+    "placeholders": {
+      "form": {
+        "type": "String"
+      }
+    }
+  },
+  "dictionaryEyebrow": "LOOK UP A LETTER",
+  "dictionaryTitle": "Every letter,\nall its forms.",
+  "dictionaryDescription": "Browse the whole alphabet grouped by letter. Search by its Cyrillic sound or Latin spelling, then tap a form to trace it.",
+  "dictionarySearchHint": "Search by Cyrillic or Latin, e.g. Б or b",
+  "dictionarySearchLabel": "Search the dictionary",
+  "dictionaryClearSearch": "Clear search",
+  "dictionaryNoResults": "No letters match your search.",
+  "dictionaryFormCount": "{count, plural, one{1 form} other{{count} forms}}",
+  "@dictionaryFormCount": {
+    "placeholders": {
+      "count": {
         "type": "int"
       }
     }

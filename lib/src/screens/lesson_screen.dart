@@ -156,7 +156,7 @@ class _LessonScreenState extends State<LessonScreen> {
                           _l10n.letterTitle(
                             widget.character.cyrillic,
                             widget.character.transliteration,
-                            _l10n.form(widget.character.form),
+                            _l10n.characterForm(widget.character),
                           ),
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
@@ -205,10 +205,17 @@ class _LessonScreenState extends State<LessonScreen> {
                             clipBehavior: Clip.antiAlias,
                             child: Semantics(
                               label: _l10n.writingArea,
-                              child: WritingCanvas(
-                                key: _canvasKey,
-                                controller: _controller,
-                                haptics: widget.haptics,
+                              child: LayoutBuilder(
+                                builder: (context, bounds) => Center(
+                                  child: SizedBox.square(
+                                    dimension: bounds.biggest.shortestSide,
+                                    child: WritingCanvas(
+                                      key: _canvasKey,
+                                      controller: _controller,
+                                      haptics: widget.haptics,
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                           ),

@@ -1,10 +1,10 @@
+import '../test_support.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:learn_uigarjin/l10n/localization.dart';
 import 'package:learn_uigarjin/src/data/mongolian_letters.dart';
 import 'package:learn_uigarjin/src/screens/home_path_screen.dart';
 import 'package:learn_uigarjin/src/screens/lesson_screen.dart';
-import 'package:learn_uigarjin/src/widgets/writing_canvas.dart';
 
 void main() {
   Widget wrap(Widget child) => MaterialApp(
@@ -90,21 +90,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(LessonScreen), findsOneWidget);
 
-      final canvasRect = tester.getRect(find.byType(WritingCanvas));
-      final reference = mongolianLetters[0].strokes.single.points;
-      Offset toGlobal(Offset normalized) => Offset(
-        canvasRect.left + normalized.dx * canvasRect.width,
-        canvasRect.top + normalized.dy * canvasRect.height,
-      );
-
-      final gesture = await tester.startGesture(toGlobal(reference.first));
-      for (final point in reference.skip(1)) {
-        await tester.pump(const Duration(milliseconds: 16));
-        await gesture.moveTo(toGlobal(point));
-      }
-      await gesture.up();
-      await tester.pump(const Duration(milliseconds: 250));
-      await tester.pumpAndSettle();
+      await traceLetter(tester, letterNInitial);
 
       await tester.ensureVisible(find.byKey(const Key('continueButton')));
       await tester.tap(find.byKey(const Key('continueButton')));
@@ -116,7 +102,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(LessonScreen), findsNothing);
-      expect(find.text('1/6'), findsOneWidget);
+      expect(find.text('1/${mongolianLetters.length}'), findsOneWidget);
       // One fewer locked node now that the second letter has unlocked.
       expect(
         find.byIcon(Icons.lock_rounded),

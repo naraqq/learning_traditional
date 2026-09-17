@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../theme/app_theme.dart';
+import 'mini_glyph_painter.dart';
 
 import '../geometry/path_builder.dart';
 import '../models/character_definition.dart';
@@ -26,9 +27,17 @@ class ReferenceGuidePainter extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
 
+    if (character.outlineContours.isNotEmpty) {
+      canvas.drawPath(
+        chartOutlinePath(character, size),
+        Paint()..color = Colors.black.withValues(alpha: 0.18),
+      );
+    }
     for (final stroke in character.strokes) {
       final points = SmoothPathBuilder.denormalize(stroke.points, size);
-      canvas.drawPath(SmoothPathBuilder.build(points), faintPaint);
+      if (character.outlineContours.isEmpty) {
+        canvas.drawPath(SmoothPathBuilder.build(points), faintPaint);
+      }
       final isActive = stroke.order - 1 == currentStrokeIndex;
       _drawOrderBadge(canvas, stroke.order, points.first, isActive);
     }

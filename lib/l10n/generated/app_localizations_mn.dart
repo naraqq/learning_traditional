@@ -24,6 +24,9 @@ class AppLocalizationsMn extends AppLocalizations {
   String get learnTab => 'Сурах';
 
   @override
+  String get dictionaryTab => 'Толь бичиг';
+
+  @override
   String get reviewTab => 'Давтах';
 
   @override
@@ -87,10 +90,10 @@ class AppLocalizationsMn extends AppLocalizations {
   String get viewAll => 'Бүгдийг үзэх';
 
   @override
-  String get collectionEyebrow => 'АНХНЫ АЛХАМ';
+  String get collectionEyebrow => 'ҮСГИЙН ЛАВЛАХ';
 
   @override
-  String get firstStrokes => 'Эхний зураасууд';
+  String get firstStrokes => 'Монгол бичгийн цагаан толгой';
 
   @override
   String unitSummary(int count) {
@@ -221,7 +224,7 @@ class AppLocalizationsMn extends AppLocalizations {
 
   @override
   String get collectionNote =>
-      'Туршилтын хичээлүүд · Үсгийн хэлбэр, зураасны дарааллыг мэргэжлийн багшаар хянуулах шаардлагатай.';
+      'Үсгийн дүрсийг Шигүсүтэй Баатарын цагаан толгойн хүснэгтээс буулгав. Хүснэгтэд зураасны дараалал заагаагүй тул энд дасгалын дараалал ашиглав.';
 
   @override
   String get isolatedForm => 'Дан хэлбэр';
@@ -251,7 +254,7 @@ class AppLocalizationsMn extends AppLocalizations {
 
   @override
   String get letterNote =>
-      'Туршилтын үсэг · Хэлбэр, зураасны дарааллыг мэргэжлийн багшаар хянуулах шаардлагатай.';
+      'Хүснэгтээс буулгасан үсэг · Дагуулж бичих дарааллыг багшаар хянуулах шаардлагатай.';
 
   @override
   String get writingArea =>
@@ -335,5 +338,98 @@ class AppLocalizationsMn extends AppLocalizations {
   @override
   String lessonProgress(int completed, int total) {
     return '$total зурааснаас $completed-ийг бичсэн';
+  }
+
+  @override
+  String get challengeTitle => 'Сорилын горим';
+
+  @override
+  String get challengePrompt => 'Энэ ямар үсэг вэ?';
+
+  @override
+  String get challengeDescription =>
+      'Монгол бичгийн дүрсийг хараад тохирох үсгийг сонгоорой.';
+
+  @override
+  String get challengeStart => 'Сорил эхлүүлэх';
+
+  @override
+  String get challengeCorrect => 'Зөв байна!';
+
+  @override
+  String get challengeIncorrect => 'Дахин хичээгээрэй!';
+
+  @override
+  String challengeAnswer(String letter) {
+    return 'Зөв хариулт: $letter';
+  }
+
+  @override
+  String get challengeNext => 'Дараагийн үсэг';
+
+  @override
+  String get challengeResults => 'Үр дүнг харах';
+
+  @override
+  String get challengeComplete => 'Сорил дууслаа!';
+
+  @override
+  String challengeScore(int correct, int total) {
+    return '$total-аас $correct зөв';
+  }
+
+  @override
+  String challengeQuestion(int current, int total) {
+    return '$total асуултын $current';
+  }
+
+  @override
+  String get challengeAgain => 'Дахин тоглох';
+
+  @override
+  String get challengeHome => 'Дасгал руу буцах';
+
+  @override
+  String get challengeGlyph => 'Таних үсэг';
+
+  @override
+  String get challengeUnavailable =>
+      'Сорил эхлүүлэхэд илүү олон үсэг хэрэгтэй.';
+
+  @override
+  String alternateForm(String form) {
+    return '$form · Хувилбар';
+  }
+
+  @override
+  String get challengeShared =>
+      'Энэ дүрс хэд хэдэн дуудлагатай. Тохирох бүлгийг сонгоорой.';
+
+  @override
+  String get dictionaryEyebrow => 'ҮСЭГ ХАЙХ';
+
+  @override
+  String get dictionaryTitle => 'Үсэг бүр,\nбүх хэлбэрээр.';
+
+  @override
+  String get dictionaryDescription =>
+      'Цагаан толгойг үсгээр нь бүлэглэн үзээрэй. Кирилл дуудлага эсвэл латин үсгээр хайж, дараа нь хэлбэр дээр дарж бичиж үзээрэй.';
+
+  @override
+  String get dictionarySearchHint =>
+      'Кирилл эсвэл латинаар хайх, жишээ нь Б эсвэл b';
+
+  @override
+  String get dictionarySearchLabel => 'Толь бичгээс хайх';
+
+  @override
+  String get dictionaryClearSearch => 'Хайлтыг арилгах';
+
+  @override
+  String get dictionaryNoResults => 'Хайлтад тохирох үсэг олдсонгүй.';
+
+  @override
+  String dictionaryFormCount(int count) {
+    return '$count хэлбэр';
   }
 }

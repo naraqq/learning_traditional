@@ -128,6 +128,12 @@ abstract class AppLocalizations {
   /// **'Learn'**
   String get learnTab;
 
+  /// No description provided for @dictionaryTab.
+  ///
+  /// In en, this message translates to:
+  /// **'Dictionary'**
+  String get dictionaryTab;
+
   /// No description provided for @reviewTab.
   ///
   /// In en, this message translates to:
@@ -251,13 +257,13 @@ abstract class AppLocalizations {
   /// No description provided for @collectionEyebrow.
   ///
   /// In en, this message translates to:
-  /// **'INTRODUCTORY COLLECTION'**
+  /// **'REFERENCE ALPHABET'**
   String get collectionEyebrow;
 
   /// No description provided for @firstStrokes.
   ///
   /// In en, this message translates to:
-  /// **'First strokes'**
+  /// **'The Mongolian alphabet'**
   String get firstStrokes;
 
   /// No description provided for @unitSummary.
@@ -479,7 +485,7 @@ abstract class AppLocalizations {
   /// No description provided for @collectionNote.
   ///
   /// In en, this message translates to:
-  /// **'Preview collection · Letter shapes and stroke order are awaiting expert review.'**
+  /// **'Letter shapes traced from the Shigüsütei Bagatur alphabet chart. Tracing order is a practice guide; the chart does not specify stroke order.'**
   String get collectionNote;
 
   /// No description provided for @isolatedForm.
@@ -533,7 +539,7 @@ abstract class AppLocalizations {
   /// No description provided for @letterNote.
   ///
   /// In en, this message translates to:
-  /// **'Preview letter · Shape and stroke order pending expert review.'**
+  /// **'Chart-based letter · Tracing order pending expert review.'**
   String get letterNote;
 
   /// No description provided for @writingArea.
@@ -685,6 +691,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Stroke {completed} of {total} completed'**
   String lessonProgress(int completed, int total);
+
+  /// No description provided for @challengeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge mode'**
+  String get challengeTitle;
+
+  /// No description provided for @challengePrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'What letter is it?'**
+  String get challengePrompt;
+
+  /// No description provided for @challengeDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Look at the traditional script and choose its matching letter.'**
+  String get challengeDescription;
+
+  /// No description provided for @challengeStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Start challenge'**
+  String get challengeStart;
+
+  /// No description provided for @challengeCorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'That’s right!'**
+  String get challengeCorrect;
+
+  /// No description provided for @challengeIncorrect.
+  ///
+  /// In en, this message translates to:
+  /// **'Keep learning!'**
+  String get challengeIncorrect;
+
+  /// No description provided for @challengeAnswer.
+  ///
+  /// In en, this message translates to:
+  /// **'Correct answer: {letter}'**
+  String challengeAnswer(String letter);
+
+  /// No description provided for @challengeNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next letter'**
+  String get challengeNext;
+
+  /// No description provided for @challengeResults.
+  ///
+  /// In en, this message translates to:
+  /// **'See results'**
+  String get challengeResults;
+
+  /// No description provided for @challengeComplete.
+  ///
+  /// In en, this message translates to:
+  /// **'Challenge complete!'**
+  String get challengeComplete;
+
+  /// No description provided for @challengeScore.
+  ///
+  /// In en, this message translates to:
+  /// **'{correct} of {total} correct'**
+  String challengeScore(int correct, int total);
+
+  /// No description provided for @challengeQuestion.
+  ///
+  /// In en, this message translates to:
+  /// **'Question {current} of {total}'**
+  String challengeQuestion(int current, int total);
+
+  /// No description provided for @challengeAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Play again'**
+  String get challengeAgain;
+
+  /// No description provided for @challengeHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to practice'**
+  String get challengeHome;
+
+  /// No description provided for @challengeGlyph.
+  ///
+  /// In en, this message translates to:
+  /// **'Letter to identify'**
+  String get challengeGlyph;
+
+  /// No description provided for @challengeUnavailable.
+  ///
+  /// In en, this message translates to:
+  /// **'More letters are needed to start a challenge.'**
+  String get challengeUnavailable;
+
+  /// No description provided for @alternateForm.
+  ///
+  /// In en, this message translates to:
+  /// **'{form} · Alternate'**
+  String alternateForm(String form);
+
+  /// No description provided for @challengeShared.
+  ///
+  /// In en, this message translates to:
+  /// **'This shape has several readings. Choose the matching group.'**
+  String get challengeShared;
+
+  /// No description provided for @dictionaryEyebrow.
+  ///
+  /// In en, this message translates to:
+  /// **'LOOK UP A LETTER'**
+  String get dictionaryEyebrow;
+
+  /// No description provided for @dictionaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Every letter,\nall its forms.'**
+  String get dictionaryTitle;
+
+  /// No description provided for @dictionaryDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Browse the whole alphabet grouped by letter. Search by its Cyrillic sound or Latin spelling, then tap a form to trace it.'**
+  String get dictionaryDescription;
+
+  /// No description provided for @dictionarySearchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by Cyrillic or Latin, e.g. Б or b'**
+  String get dictionarySearchHint;
+
+  /// No description provided for @dictionarySearchLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Search the dictionary'**
+  String get dictionarySearchLabel;
+
+  /// No description provided for @dictionaryClearSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get dictionaryClearSearch;
+
+  /// No description provided for @dictionaryNoResults.
+  ///
+  /// In en, this message translates to:
+  /// **'No letters match your search.'**
+  String get dictionaryNoResults;
+
+  /// No description provided for @dictionaryFormCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 form} other{{count} forms}}'**
+  String dictionaryFormCount(int count);
 }
 
 class _AppLocalizationsDelegate

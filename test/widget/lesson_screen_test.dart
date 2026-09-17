@@ -1,10 +1,10 @@
+import '../test_support.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:learn_uigarjin/l10n/localization.dart';
 import 'package:learn_uigarjin/src/data/mongolian_letters.dart';
 import 'package:learn_uigarjin/src/screens/lesson_screen.dart';
 import 'package:learn_uigarjin/src/widgets/primary_action_button.dart';
-import 'package:learn_uigarjin/src/widgets/writing_canvas.dart';
 
 void main() {
   Widget wrap(Widget child) => MaterialApp(
@@ -74,25 +74,11 @@ void main() {
       await tester.pumpWidget(wrap(LessonScreen(character: letterNInitial)));
       await tester.pumpAndSettle();
 
-      final canvasRect = tester.getRect(find.byType(WritingCanvas));
-      final reference = letterNInitial.strokes.single.points;
-      Offset toGlobal(Offset normalized) => Offset(
-        canvasRect.left + normalized.dx * canvasRect.width,
-        canvasRect.top + normalized.dy * canvasRect.height,
-      );
-
-      final gesture = await tester.startGesture(toGlobal(reference.first));
-      for (final point in reference.skip(1)) {
-        await tester.pump(const Duration(milliseconds: 16));
-        await gesture.moveTo(toGlobal(point));
-      }
-      await gesture.up();
-      await tester.pump(const Duration(milliseconds: 250));
-      await tester.pumpAndSettle();
+      await traceLetter(tester, letterNInitial);
 
       expect(find.textContaining('Correct'), findsOneWidget);
 
-      // With the single-stroke letter complete, Continue unlocks.
+      // With all letter segments complete, Continue unlocks.
       final continueButton = tester.widget<PrimaryActionButton>(
         find.byKey(const Key('continueButton')),
       );

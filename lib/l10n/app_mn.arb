@@ -5,6 +5,7 @@
   "splashSubtitle": "Босоо бичгийг эзэмш",
   "homeTab": "Нүүр",
   "learnTab": "Сурах",
+  "dictionaryTab": "Толь бичиг",
   "reviewTab": "Давтах",
   "settingsTab": "Тохиргоо",
   "language": "Хэл",
@@ -25,8 +26,8 @@
   "lessonsFinished": "Дууссан хичээл",
   "learningJourney": "Таны сурах зам",
   "viewAll": "Бүгдийг үзэх",
-  "collectionEyebrow": "АНХНЫ АЛХАМ",
-  "firstStrokes": "Эхний зураасууд",
+  "collectionEyebrow": "ҮСГИЙН ЛАВЛАХ",
+  "firstStrokes": "Монгол бичгийн цагаан толгой",
   "unitSummary": "{count} үсгийн хэлбэр · Загвар дагаж бичих",
   "@unitSummary": {
     "placeholders": {
@@ -111,7 +112,7 @@
       }
     }
   },
-  "collectionNote": "Туршилтын хичээлүүд · Үсгийн хэлбэр, зураасны дарааллыг мэргэжлийн багшаар хянуулах шаардлагатай.",
+  "collectionNote": "Үсгийн дүрсийг Шигүсүтэй Баатарын цагаан толгойн хүснэгтээс буулгав. Хүснэгтэд зураасны дараалал заагаагүй тул энд дасгалын дараалал ашиглав.",
   "isolatedForm": "Дан хэлбэр",
   "initialForm": "Эхэн хэлбэр",
   "medialForm": "Дунд хэлбэр",
@@ -133,7 +134,7 @@
       }
     }
   },
-  "letterNote": "Туршилтын үсэг · Хэлбэр, зураасны дарааллыг мэргэжлийн багшаар хянуулах шаардлагатай.",
+  "letterNote": "Хүснэгтээс буулгасан үсэг · Дагуулж бичих дарааллыг багшаар хянуулах шаардлагатай.",
   "writingArea": "Бичих талбар. Тэмдэглэсэн эхлэх цэгээс загварыг дагуулж бичээрэй.",
   "undo": "Буцаах",
   "clear": "Арилгах",
@@ -175,5 +176,31 @@
         "type": "int"
       }
     }
-  }
+  },
+  "challengeTitle": "Сорилын горим",
+  "challengePrompt": "Энэ ямар үсэг вэ?",
+  "challengeDescription": "Монгол бичгийн дүрсийг хараад тохирох үсгийг сонгоорой.",
+  "challengeStart": "Сорил эхлүүлэх",
+  "challengeCorrect": "Зөв байна!",
+  "challengeIncorrect": "Дахин хичээгээрэй!",
+  "challengeAnswer": "Зөв хариулт: {letter}",
+  "challengeNext": "Дараагийн үсэг",
+  "challengeResults": "Үр дүнг харах",
+  "challengeComplete": "Сорил дууслаа!",
+  "challengeScore": "{total}-аас {correct} зөв",
+  "challengeQuestion": "{total} асуултын {current}",
+  "challengeAgain": "Дахин тоглох",
+  "challengeHome": "Дасгал руу буцах",
+  "challengeGlyph": "Таних үсэг",
+  "challengeUnavailable": "Сорил эхлүүлэхэд илүү олон үсэг хэрэгтэй.",
+  "alternateForm": "{form} · Хувилбар",
+  "challengeShared": "Энэ дүрс хэд хэдэн дуудлагатай. Тохирох бүлгийг сонгоорой.",
+  "dictionaryEyebrow": "ҮСЭГ ХАЙХ",
+  "dictionaryTitle": "Үсэг бүр,\nбүх хэлбэрээр.",
+  "dictionaryDescription": "Цагаан толгойг үсгээр нь бүлэглэн үзээрэй. Кирилл дуудлага эсвэл латин үсгээр хайж, дараа нь хэлбэр дээр дарж бичиж үзээрэй.",
+  "dictionarySearchHint": "Кирилл эсвэл латинаар хайх, жишээ нь Б эсвэл b",
+  "dictionarySearchLabel": "Толь бичгээс хайх",
+  "dictionaryClearSearch": "Хайлтыг арилгах",
+  "dictionaryNoResults": "Хайлтад тохирох үсэг олдсонгүй.",
+  "dictionaryFormCount": "{count} хэлбэр"
 }

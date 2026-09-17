@@ -10,7 +10,7 @@ void main() {
       beautifyEnabled: false,
       toleranceMode: ToleranceMode.advanced,
     );
-    final result = lesson.submitStroke(letterNInitial.strokes.single.points);
+    final result = lesson.submitStroke(letterNInitial.strokes.first.points);
     expect(result.accepted, isTrue);
     expect(lesson.toleranceMode, ToleranceMode.advanced);
     final stroke = lesson.completedStrokes.single;

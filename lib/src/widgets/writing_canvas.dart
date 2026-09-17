@@ -179,6 +179,10 @@ class WritingCanvasState extends State<WritingCanvas>
 
   void _onPointerUp(PointerUpEvent event) {
     if (event.pointer != _activePointerId) return;
+    // Keep the actual pen-up position: the live low-pass filter can otherwise
+    // shorten the tiny detached marks present in the reference alphabet.
+    final endpoint = _normalize(event.localPosition);
+    _activeStroke.addPoint(endpoint, _normalizedPressure(event));
     _activePointerId = null;
     _finishStroke();
   }

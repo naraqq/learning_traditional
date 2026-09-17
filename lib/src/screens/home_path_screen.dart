@@ -10,6 +10,7 @@ import '../storage/progress_store.dart';
 import '../theme/app_theme.dart';
 import '../widgets/primary_action_button.dart';
 import 'lesson_screen.dart';
+import 'challenge_screen.dart';
 
 class HomePathScreen extends StatefulWidget {
   HomePathScreen({
@@ -28,7 +29,9 @@ class HomePathScreen extends StatefulWidget {
 
 class _HomePathScreenState extends State<HomePathScreen> {
   late final AppProgressController _progress;
+  late final TextEditingController _dictionarySearchController;
   int _tab = 0;
+  String _dictionaryQuery = '';
   AppLocalizations get _l10n => context.l10n;
 
   @override
@@ -41,11 +44,13 @@ class _HomePathScreenState extends State<HomePathScreen> {
           store: widget.store,
         );
     if (widget.progress == null) unawaited(_progress.load());
+    _dictionarySearchController = TextEditingController();
   }
 
   @override
   void dispose() {
     if (widget.progress == null) _progress.dispose();
+    _dictionarySearchController.dispose();
     super.dispose();
   }
 
@@ -145,7 +150,8 @@ class _HomePathScreenState extends State<HomePathScreen> {
                         switch (_tab) {
                           0 => _home(),
                           1 => _learn(),
-                          2 => _review(),
+                          2 => _dictionary(),
+                          3 => _review(),
                           _ => _settings(),
                         },
                       ],
@@ -167,6 +173,11 @@ class _HomePathScreenState extends State<HomePathScreen> {
             icon: Icon(Icons.menu_book_outlined),
             selectedIcon: Icon(Icons.menu_book_rounded),
             label: _l10n.learnTab,
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.travel_explore_outlined),
+            selectedIcon: Icon(Icons.travel_explore_rounded),
+            label: _l10n.dictionaryTab,
           ),
           NavigationDestination(
             icon: Icon(Icons.history_edu_outlined),
@@ -249,6 +260,8 @@ class _HomePathScreenState extends State<HomePathScreen> {
         Text(_l10n.homeDescription),
         const SizedBox(height: 26),
         _hero(next),
+        const SizedBox(height: 16),
+        _challengeCard(),
         const SizedBox(height: 22),
         Row(
           children: [
@@ -307,9 +320,7 @@ class _HomePathScreenState extends State<HomePathScreen> {
                   minHeight: 6,
                   backgroundColor: AppColors.line,
                   semanticsLabel: _l10n.collectionProgress,
-                  semanticsValue: _l10n.percentSpoken(
-                    (_progress.fraction * 100).round(),
-                  ),
+                  semanticsValue: '${(_progress.fraction * 100).round()}',
                 ),
               ),
               const SizedBox(height: 10),
@@ -379,7 +390,7 @@ class _HomePathScreenState extends State<HomePathScreen> {
                         : _l10n.letterTitle(
                             next.cyrillic,
                             next.transliteration,
-                            _l10n.form(next.form),
+                            _l10n.characterForm(next),
                           ),
                     style: const TextStyle(
                       color: Color(0xFFD5E2DB),
@@ -421,7 +432,7 @@ class _HomePathScreenState extends State<HomePathScreen> {
         FilledButton.icon(
           key: const Key('continueLearningButton'),
           onPressed: next == null
-              ? () => _selectTab(2)
+              ? () => _selectTab(3)
               : () => _openLesson(next),
           style: FilledButton.styleFrom(
             backgroundColor: const Color(0xFFE5D5B5),
@@ -462,6 +473,172 @@ class _HomePathScreenState extends State<HomePathScreen> {
     ],
   );
 
+  Widget _dictionary() {
+    final entries = buildLetterDictionary(widget.letters);
+    final query = _dictionaryQuery.trim().toLowerCase();
+    final filtered = query.isEmpty
+        ? entries
+        : entries
+              .where(
+                (entry) =>
+                    entry.cyrillic.toLowerCase().contains(query) ||
+                    entry.transliteration.toLowerCase().contains(query),
+              )
+              .toList();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        _eyebrow(_l10n.dictionaryEyebrow),
+        const SizedBox(height: 10),
+        Text(
+          _l10n.dictionaryTitle,
+          style: Theme.of(context).textTheme.headlineLarge,
+        ),
+        const SizedBox(height: 10),
+        Text(_l10n.dictionaryDescription),
+        const SizedBox(height: 20),
+        Semantics(
+          textField: true,
+          label: _l10n.dictionarySearchLabel,
+          child: TextField(
+            key: const Key('dictionarySearchField'),
+            controller: _dictionarySearchController,
+            onChanged: (value) => setState(() => _dictionaryQuery = value),
+            decoration: InputDecoration(
+              hintText: _l10n.dictionarySearchHint,
+              prefixIcon: const Icon(Icons.search_rounded),
+              suffixIcon: _dictionaryQuery.isEmpty
+                  ? null
+                  : IconButton(
+                      key: const Key('dictionaryClearSearchButton'),
+                      tooltip: _l10n.dictionaryClearSearch,
+                      icon: const Icon(Icons.close_rounded),
+                      onPressed: () => setState(() {
+                        _dictionarySearchController.clear();
+                        _dictionaryQuery = '';
+                      }),
+                    ),
+              filled: true,
+              fillColor: AppColors.surface,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(16),
+                borderSide: const BorderSide(color: AppColors.line),
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
+        if (filtered.isEmpty)
+          _panel(
+            child: Column(
+              children: [
+                const Icon(
+                  Icons.search_off_rounded,
+                  size: 40,
+                  color: AppColors.textMuted,
+                ),
+                const SizedBox(height: 12),
+                Text(_l10n.dictionaryNoResults, textAlign: TextAlign.center),
+              ],
+            ),
+          )
+        else
+          for (final entry in filtered) ...[
+            _dictionaryEntryCard(entry),
+            const SizedBox(height: 12),
+          ],
+        const SizedBox(height: 8),
+        _contentNote(),
+      ],
+    );
+  }
+
+  Widget _dictionaryEntryCard(LetterDictionaryEntry entry) => _panel(
+    padding: 18,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.baseline,
+          textBaseline: TextBaseline.alphabetic,
+          children: [
+            Text(entry.cyrillic, style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(width: 8),
+            Text(
+              '· ${entry.transliteration}',
+              style: const TextStyle(fontSize: 14, color: AppColors.textMuted),
+            ),
+            const Spacer(),
+            Text(
+              _l10n.dictionaryFormCount(entry.forms.length),
+              style: const TextStyle(fontSize: 11, color: AppColors.textMuted),
+            ),
+          ],
+        ),
+        const SizedBox(height: 14),
+        Row(
+          children: [
+            for (var i = 0; i < entry.forms.length; i++) ...[
+              if (i > 0) const SizedBox(width: 10),
+              Expanded(child: _dictionaryFormTile(entry.forms[i])),
+            ],
+          ],
+        ),
+      ],
+    ),
+  );
+
+  Widget _dictionaryFormTile(CharacterDefinition character) {
+    final unlocked = _progress.isUnlocked(character.id);
+    return Material(
+      color: const Color(0xFFEEF1E7),
+      borderRadius: BorderRadius.circular(14),
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        key: Key('dictForm_${character.id}'),
+        onTap: () => _openLesson(character),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 4),
+          child: Column(
+            children: [
+              Semantics(
+                label: _l10n.referencePreview(
+                  character.cyrillic,
+                  _l10n.characterForm(character),
+                ),
+                image: true,
+                child: SizedBox(
+                  width: 48,
+                  height: 58,
+                  child: CustomPaint(
+                    painter: MiniGlyphPainter(
+                      character: character,
+                      color: AppColors.primary,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                _l10n.form(character.form),
+                style: const TextStyle(fontSize: 11, color: AppColors.textMuted),
+                textAlign: TextAlign.center,
+              ),
+              if (!unlocked) ...[
+                const SizedBox(height: 4),
+                const Icon(
+                  Icons.lock_outline_rounded,
+                  size: 12,
+                  color: AppColors.textMuted,
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _review() {
     final completed = widget.letters
         .where((c) => _progress.isCompleted(c.id))
@@ -477,6 +654,8 @@ class _HomePathScreenState extends State<HomePathScreen> {
         ),
         const SizedBox(height: 12),
         Text(_l10n.reviewDescription),
+        const SizedBox(height: 20),
+        _challengeCard(),
         const SizedBox(height: 24),
         if (completed.isEmpty)
           _panel(
@@ -508,6 +687,36 @@ class _HomePathScreenState extends State<HomePathScreen> {
       ],
     );
   }
+
+  Widget _challengeCard() => _panel(
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        const Align(
+          alignment: Alignment.centerLeft,
+          child: Icon(Icons.quiz_outlined, color: AppColors.primary, size: 28),
+        ),
+        const SizedBox(height: 12),
+        Text(
+          _l10n.challengeTitle,
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
+        const SizedBox(height: 6),
+        Text(_l10n.challengeDescription),
+        const SizedBox(height: 16),
+        FilledButton.icon(
+          key: const Key('startChallengeButton'),
+          onPressed: () => Navigator.of(context).push<void>(
+            MaterialPageRoute(
+              builder: (_) => ChallengeScreen(letters: widget.letters),
+            ),
+          ),
+          icon: const Icon(Icons.play_arrow_rounded),
+          label: Text(_l10n.challengeStart),
+        ),
+      ],
+    ),
+  );
 
   Widget _settings() => Column(
     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -657,16 +866,13 @@ class _HomePathScreenState extends State<HomePathScreen> {
                 Semantics(
                   label: _l10n.referencePreview(
                     character.cyrillic,
-                    _l10n.form(character.form),
+                    _l10n.characterForm(character),
                   ),
                   image: true,
                   child: Container(
-                    width: 48,
-                    height: 68,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 8,
-                    ),
+                    width: 64,
+                    height: 76,
+                    padding: const EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       color: unlocked
                           ? const Color(0xFFEEF1E7)
@@ -704,9 +910,9 @@ class _HomePathScreenState extends State<HomePathScreen> {
                       const SizedBox(height: 2),
                       Text(
                         score == null
-                            ? _l10n.form(character.form)
+                            ? _l10n.characterForm(character)
                             : _l10n.formBestScore(
-                                _l10n.form(character.form),
+                                _l10n.characterForm(character),
                                 score.round(),
                               ),
                         style: const TextStyle(
@@ -783,14 +989,13 @@ class _HomePathScreenState extends State<HomePathScreen> {
     ),
   );
 
-  Widget _panel({required Widget child, double padding = 22}) => Container(
-    padding: EdgeInsets.all(padding),
-    decoration: BoxDecoration(
-      color: AppColors.surface,
+  Widget _panel({required Widget child, double padding = 22}) => Material(
+    color: AppColors.surface,
+    shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(22),
-      border: Border.all(color: AppColors.line),
+      side: const BorderSide(color: AppColors.line),
     ),
-    child: child,
+    child: Padding(padding: EdgeInsets.all(padding), child: child),
   );
 
   Widget _eyebrow(String text) => Text(

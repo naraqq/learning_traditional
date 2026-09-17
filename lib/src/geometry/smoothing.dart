@@ -32,6 +32,32 @@ class StrokeSmoothing {
     }
     return result;
   }
+
+  /// Same idea as [movingAverage] but for a closed loop (e.g. a traced
+  /// glyph outline): every point is averaged with its cyclic neighbors, so
+  /// there are no anchored "ends" to seam at and small photographic
+  /// tracing noise gets smoothed out evenly all the way around.
+  static List<Offset> closedMovingAverage(
+    List<Offset> points, {
+    int windowSize = 3,
+  }) {
+    if (points.length < 3 || windowSize < 2) return List<Offset>.of(points);
+    final radius = windowSize ~/ 2;
+    final n = points.length;
+    final result = <Offset>[];
+    for (var i = 0; i < n; i++) {
+      var sx = 0.0;
+      var sy = 0.0;
+      for (var j = -radius; j <= radius; j++) {
+        final p = points[(i + j + n) % n];
+        sx += p.dx;
+        sy += p.dy;
+      }
+      final count = radius * 2 + 1;
+      result.add(Offset(sx / count, sy / count));
+    }
+    return result;
+  }
 }
 
 /// A minimal One-Euro-Filter-style low-pass filter for real-time point

@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'reference_stroke.dart';
 
 /// Where in a word this character form appears. Traditional Mongolian
@@ -22,7 +23,19 @@ class CharacterDefinition {
     required this.recommendedBrushWidth,
     this.isDemoData = false,
     this.expertReviewNote,
+    this.outlineContours = const [],
+    this.recognitionGroup,
+    this.alternate = false,
   });
+
+  /// Filled ink contours transcribed from the reference chart, in the same
+  /// normalized square coordinates as the tracing segments. Even-odd fill
+  /// preserves counters (holes) inside looped letters.
+  final List<List<Offset>> outlineContours;
+
+  /// Forms with identical visible shapes share a recognition answer.
+  final String? recognitionGroup;
+  final bool alternate;
 
   /// Stable identifier, e.g. `n_initial`.
   final String id;

@@ -5,7 +5,7 @@ A Flutter app for practicing traditional Mongolian handwriting. The first develo
 ## What works
 
 - **Home:** continue directly into the next form, view collection progress and completed practice counts.
-- **Learn:** browse six preview letter forms, inspect their reference shapes, and unlock lessons sequentially.
+- **Learn:** browse 73 chart-based letter forms, inspect their reference shapes, and unlock lessons sequentially.
 - **Handwriting:** watch an animated stroke demonstration, trace with finger or stylus, receive geometric feedback, undo/clear strokes, and see a tracing score.
 - **Review:** repeat completed forms and view the best tracing score for each.
 - **Settings:** switch instantly between English and Cyrillic Mongolian (Монгол), and persist guidance, accepted-stroke polishing, and haptic feedback preferences.
@@ -24,7 +24,7 @@ Translations live in `lib/l10n/app_en.arb` and `lib/l10n/app_mn.arb`. Edit those
 
 ## Content status
 
-**This is an early learning edition, not an expert-verified curriculum.** All six bundled forms in `lib/src/data/mongolian_letters.dart` are marked `isDemoData: true`. Their silhouettes were digitized from a reference chart; exact shapes, stroke count, order, direction, and proportions still require review by a traditional Mongolian writing teacher. The app displays this status.
+**This is an early learning edition, not an expert-verified curriculum.** The 73 bundled forms are extracted from the user-supplied alphabet chart by Shigüsütei Bagatur. Their filled outlines preserve the chart’s shapes; the tracing segments and their order are inferred and remain marked `isDemoData: true` pending teacher review. See `tool/reference/README.md` for source provenance and regeneration. The app displays this distinction.
 
 Do not remove those flags merely to make the interface look finished. Add source provenance and reviewer sign-off when replacing or approving content. Full vertical Unicode text shaping, connected words, pronunciation audio, and a complete beginner curriculum are not included yet.
 
@@ -62,7 +62,7 @@ lib/src/
   theme/         Paper, teal, copper, typography, and component styling
   storage/       SharedPreferencesAsync adapter and in-memory test store
   controllers/   Saved learning progress, lesson state, and pointer input
-  data/          Six preview letter definitions
+  data/          Chart-based alphabet definitions
   models/        Character forms, reference strokes, and validation results
   geometry/      Resampling, smoothing, and path construction
   validation/    Deterministic geometric stroke scoring

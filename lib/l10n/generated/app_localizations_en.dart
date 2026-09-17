@@ -24,6 +24,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get learnTab => 'Learn';
 
   @override
+  String get dictionaryTab => 'Dictionary';
+
+  @override
   String get reviewTab => 'Review';
 
   @override
@@ -89,10 +92,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get viewAll => 'View all';
 
   @override
-  String get collectionEyebrow => 'INTRODUCTORY COLLECTION';
+  String get collectionEyebrow => 'REFERENCE ALPHABET';
 
   @override
-  String get firstStrokes => 'First strokes';
+  String get firstStrokes => 'The Mongolian alphabet';
 
   @override
   String unitSummary(int count) {
@@ -229,7 +232,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get collectionNote =>
-      'Preview collection · Letter shapes and stroke order are awaiting expert review.';
+      'Letter shapes traced from the Shigüsütei Bagatur alphabet chart. Tracing order is a practice guide; the chart does not specify stroke order.';
 
   @override
   String get isolatedForm => 'Isolated form';
@@ -259,7 +262,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get letterNote =>
-      'Preview letter · Shape and stroke order pending expert review.';
+      'Chart-based letter · Tracing order pending expert review.';
 
   @override
   String get writingArea =>
@@ -343,5 +346,103 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String lessonProgress(int completed, int total) {
     return 'Stroke $completed of $total completed';
+  }
+
+  @override
+  String get challengeTitle => 'Challenge mode';
+
+  @override
+  String get challengePrompt => 'What letter is it?';
+
+  @override
+  String get challengeDescription =>
+      'Look at the traditional script and choose its matching letter.';
+
+  @override
+  String get challengeStart => 'Start challenge';
+
+  @override
+  String get challengeCorrect => 'That’s right!';
+
+  @override
+  String get challengeIncorrect => 'Keep learning!';
+
+  @override
+  String challengeAnswer(String letter) {
+    return 'Correct answer: $letter';
+  }
+
+  @override
+  String get challengeNext => 'Next letter';
+
+  @override
+  String get challengeResults => 'See results';
+
+  @override
+  String get challengeComplete => 'Challenge complete!';
+
+  @override
+  String challengeScore(int correct, int total) {
+    return '$correct of $total correct';
+  }
+
+  @override
+  String challengeQuestion(int current, int total) {
+    return 'Question $current of $total';
+  }
+
+  @override
+  String get challengeAgain => 'Play again';
+
+  @override
+  String get challengeHome => 'Back to practice';
+
+  @override
+  String get challengeGlyph => 'Letter to identify';
+
+  @override
+  String get challengeUnavailable =>
+      'More letters are needed to start a challenge.';
+
+  @override
+  String alternateForm(String form) {
+    return '$form · Alternate';
+  }
+
+  @override
+  String get challengeShared =>
+      'This shape has several readings. Choose the matching group.';
+
+  @override
+  String get dictionaryEyebrow => 'LOOK UP A LETTER';
+
+  @override
+  String get dictionaryTitle => 'Every letter,\nall its forms.';
+
+  @override
+  String get dictionaryDescription =>
+      'Browse the whole alphabet grouped by letter. Search by its Cyrillic sound or Latin spelling, then tap a form to trace it.';
+
+  @override
+  String get dictionarySearchHint => 'Search by Cyrillic or Latin, e.g. Б or b';
+
+  @override
+  String get dictionarySearchLabel => 'Search the dictionary';
+
+  @override
+  String get dictionaryClearSearch => 'Clear search';
+
+  @override
+  String get dictionaryNoResults => 'No letters match your search.';
+
+  @override
+  String dictionaryFormCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count forms',
+      one: '1 form',
+    );
+    return '$_temp0';
   }
 }

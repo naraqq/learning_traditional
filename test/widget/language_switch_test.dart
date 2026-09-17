@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:learn_uigarjin/main.dart';
 import 'package:learn_uigarjin/src/data/mongolian_letters.dart';
-import 'package:learn_uigarjin/src/widgets/writing_canvas.dart';
 
 import '../test_support.dart';
 
@@ -71,17 +70,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('БИЧИХ ДАСГАЛ'), findsOneWidget);
       expect(find.text('Эхний зураасыг дагуулж бичээрэй.'), findsOneWidget);
-      final rect = tester.getRect(find.byType(WritingCanvas));
-      Offset point(Offset p) =>
-          Offset(rect.left + p.dx * rect.width, rect.top + p.dy * rect.height);
-      final reference = letterNInitial.strokes.single.points;
-      final gesture = await tester.startGesture(point(reference.first));
-      for (final p in reference.skip(1)) {
-        await tester.pump(const Duration(milliseconds: 16));
-        await gesture.moveTo(point(p));
-      }
-      await gesture.up();
-      await tester.pumpAndSettle();
+      await traceLetter(tester, letterNInitial);
       expect(find.text('Зөв байна!'), findsOneWidget);
       await tester.tap(find.byKey(const Key('continueButton')));
       await tester.pumpAndSettle();
@@ -92,7 +81,7 @@ void main() {
       );
       await tester.tap(find.byKey(const Key('celebrationContinueButton')));
       await tester.pumpAndSettle();
-      expect(find.text('1/6'), findsOneWidget);
+      expect(find.text('1/${mongolianLetters.length}'), findsOneWidget);
       await tester.tap(find.text('Давтах'));
       await tester.pumpAndSettle();
       expect(find.textContaining('Дээд үнэлгээ:'), findsOneWidget);
