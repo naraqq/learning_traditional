@@ -1,9 +1,36 @@
 import '../models/character_definition.dart';
 import 'chart_letters.dart';
 
-// Preserve the six existing IDs and their lesson order for saved progress.
-// All geometry now comes from the supplied chart; remaining forms follow
-// its row order, including alternatives. No initial ng form is invented.
+/// Lesson order: vowels first, then consonants in the sequence this
+/// alphabet is actually taught (matching the reference alphabet chart),
+/// with every form of a letter (initial, medial, final, then any
+/// alternates) kept together — rather than the source data's own row
+/// order, which groups by shape and scatters a letter's later forms far
+/// from its initial. `td` fills the single chart slot shared by Т and Д;
+/// `jz` and `chts` likewise stand in for З/Ж and Ц/Ч, which share one
+/// traditional shape each.
+const _letterOrder = [
+  'a', 'e', 'i', 'ou', 'oeue', // vowels
+  'n', 'm', 'l', 'r', //
+  'y', 'g', 'kh', 'b', 'td', //
+  's', 'sh', 'jz', 'chts', //
+  'p', 'f', 'k', 'v', 'ng', // remaining consonants
+];
+
+final List<CharacterDefinition> mongolianLetters = _orderedLetters();
+
+List<CharacterDefinition> _orderedLetters() {
+  final byBase = <String, List<CharacterDefinition>>{};
+  for (final letter in chartLetters) {
+    (byBase[letter.id.split('_').first] ??= []).add(letter);
+  }
+  return [
+    for (final base in _letterOrder) ...byBase[base]!,
+  ];
+}
+
+// Kept for screens/tests that reference a specific letter by name; no
+// longer implies anything about lesson order.
 final CharacterDefinition letterNInitial = _byId('n_initial');
 final CharacterDefinition letterNMedial = _byId('n_medial');
 final CharacterDefinition letterBInitial = _byId('b_initial');
@@ -13,25 +40,6 @@ final CharacterDefinition letterGInitial = _byId('g_initial');
 
 CharacterDefinition _byId(String id) =>
     chartLetters.firstWhere((c) => c.id == id);
-
-final List<CharacterDefinition> mongolianLetters = [
-  letterNInitial,
-  letterNMedial,
-  letterBInitial,
-  letterMInitial,
-  letterLInitial,
-  letterGInitial,
-  ...chartLetters.where(
-    (c) => !const {
-      'n_initial',
-      'n_medial',
-      'b_initial',
-      'm_initial',
-      'l_initial',
-      'g_initial',
-    }.contains(c.id),
-  ),
-];
 
 /// A chart may use the same shape for several sounds. Return all matching
 /// labels so a context-free quiz never marks a valid reading as wrong.

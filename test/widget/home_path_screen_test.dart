@@ -90,7 +90,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byType(LessonScreen), findsOneWidget);
 
-      await traceLetter(tester, letterNInitial);
+      await traceLetter(tester, mongolianLetters[0]);
 
       await tester.ensureVisible(find.byKey(const Key('continueButton')));
       await tester.tap(find.byKey(const Key('continueButton')));

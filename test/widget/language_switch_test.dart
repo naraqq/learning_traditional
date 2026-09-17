@@ -70,7 +70,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('БИЧИХ ДАСГАЛ'), findsOneWidget);
       expect(find.text('Эхний зураасыг дагуулж бичээрэй.'), findsOneWidget);
-      await traceLetter(tester, letterNInitial);
+      await traceLetter(tester, mongolianLetters[0]);
       expect(find.text('Зөв байна!'), findsOneWidget);
       await tester.tap(find.byKey(const Key('continueButton')));
       await tester.pumpAndSettle();
